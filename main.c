@@ -3,11 +3,13 @@
 
 int main() {
 	struct Motors motor1;
-	/*
-	motor1.enablePin = 0;
-	motor1.forwardPin = 3;
-	motor1.reversePin = 2;
-	*/
+
+	//***************************************************
+	//These ints are the number of the wiringPi library pins
+	//they correspond to pins 11, 15, and 13 on the actual Pi
+	//I chose these because in the motor shield pdf on iLearn
+	//in the pin description section it has these pins for Motor1
+	//****************************************************
    	Init(&motor1, 0, 3, 2);
    	Move(&motor1, 'R');
 

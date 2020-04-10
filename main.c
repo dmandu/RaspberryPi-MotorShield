@@ -2,6 +2,14 @@
 #include "MotorShield.h"
 
 int main() {
-    printf("Hello, World!\n");
-    return 0;
+	struct Motors motor1;
+	/*
+	motor1.enablePin = 0;
+	motor1.forwardPin = 3;
+	motor1.reversePin = 2;
+	*/
+   	Init(&motor1, 0, 3, 2);
+   	Move(&motor1, 'R');
+
+   	return 0;
 }

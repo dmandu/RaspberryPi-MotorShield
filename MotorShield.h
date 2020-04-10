@@ -16,9 +16,9 @@ struct Motors {
 };
 
 
-void Init(struct Motors, int, int, int);
+void Init(struct Motors *, int, int, int);
 
-void Move(struct Motors, char);
+void Move(struct Motors *, char);
 
 void Stop(bool Yes);
 #endif //ASSIGNMENT3_MOTORSHIELD_H

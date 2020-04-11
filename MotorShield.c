@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <wiringPi.h>
+#include <softPwm.h>
 #include "MotorShield.h"
 
 
@@ -27,6 +28,7 @@ void Init(struct Motors *motor, int enable, int forward, int reverse) {
 	motor->enablePin = enable;
 	motor->forwardPin = forward;
 	motor->reversePin = reverse;
+	softPwmCreate(enable, 50, 100);
 
 
 	//****************************************
@@ -56,9 +58,11 @@ void Init(struct Motors *motor, int enable, int forward, int reverse) {
 //*************************************
 //Method to test that that motors are
 //moving either forward or reverse
+//speed is the PWM range 0-100
 //*************************************
-void Move(struct Motors *motor, char direction) {
+void Move(struct Motors *motor, char direction, int speed) {
 
+	softPwmWrite(motor->enablePin, speed);
 	//******************************************
 	//If reverse direction, turn reverse pin on
 	//and turn off forward pin, else move foward
@@ -80,4 +84,11 @@ void Move(struct Motors *motor, char direction) {
 	printf("EnablePin: %d\n", motor->enablePin);
 	printf("ForwardPin: %d\n", motor->forwardPin);
 	printf("ReversePin: %d\n", motor->reversePin);
+}
+
+void Stop(bool Yes, struct Motors *motor) {
+	if(Yes) {
+		digitalWrite(motor->forwardPin, LOW);
+		digitalWrite(motor->reversePin, LOW);
+	}
 }

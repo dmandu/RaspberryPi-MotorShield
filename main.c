@@ -1,3 +1,15 @@
+/**************************************************************
+* Class: CSC-615-01 Spring 2020
+* Name: David Mandujano
+* Student ID: 911901177
+* Project: Assignment3 - Motors
+*
+* File: main.c
+*
+* Description: This file tests our code from MotorShield.c and calls
+*		the methods to run the motors on the Raspberry Pi
+******************************************************************/
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>

@@ -1,6 +1,14 @@
-//
-// Created by d22ma on 4/9/2020.
-//
+/**************************************************************
+* Class: CSC-615-01 Spring 2020
+* Name: David Mandujano
+* Student ID: 911901177
+* Project: Assignment3 - Motors
+*
+* File: MotorShield.c
+*
+* Description: This file contains the instructions of each method to
+*		initialize and run the motos on the Raspberry Pi
+**************************************************************/
 
 #include <stdlib.h>
 #include <stdio.h>

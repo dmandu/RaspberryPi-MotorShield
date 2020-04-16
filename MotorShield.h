@@ -1,6 +1,15 @@
-//
-// Created by d22ma on 4/9/2020.
-//
+/**************************************************************
+* Class: CSC-615-01 Spring 2020
+* Name: David Mandujano
+* Student ID: 911901177
+* Project: Assignment 3 - Motors
+*
+* File: MotorShield.h
+*
+* Description: This file is the header file of the MotorShield.c
+*		methods. It contains the struct and the definitions
+*		of each method.
+**************************************************************/
 
 #include <stdio.h>
 #include <wiringPi.h>

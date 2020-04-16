@@ -1,2 +1,2 @@
-motorTest: main.c MotorShield.c
-	gcc -o motorTest main.c MotorShield.c -I. -lwiringPi
+assignment3: main.c MotorShield.c
+	gcc -o assignment3 main.c MotorShield.c -I. -lwiringPi

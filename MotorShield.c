@@ -53,50 +53,96 @@ void Init(struct Motors *motor, int enable, int forward, int reverse) {
     	digitalWrite(motor->enablePin, HIGH);
     	digitalWrite(motor->forwardPin, LOW);
     	digitalWrite(motor->reversePin, LOW);
-
-	//************************************
-	//Print the pin numbers just to check
-	//************************************
-	printf("\nEnablePin: %d", motor->enablePin);
-	printf("\nForwardPin: %d", motor->forwardPin);
-	printf("\nReversePin: %d\n", motor->reversePin);
 }
 
+
+void Move(struct Motors motor [], char direction,  int speed) {
+	for(int i = 0; i < 4; ++i) {
+		printf("Pins of motor%d: E: %d, F: %d, R: %d\n", (i+1), motor[i].enablePin, motor[i].forwardPin, motor[i].reversePin);
+		softPwmWrite(motor[i].enablePin, speed);
+	}
+
+	if(direction == 'F') {
+		for(int i = 0; i < 4; ++i) {
+			digitalWrite(motor[i].reversePin, LOW);
+			digitalWrite(motor[i].forwardPin, HIGH);
+		}
+	}
+	else if(direction == 'B') {
+		for(int i = 0; i < 4; ++i) {
+			digitalWrite(motor[i].forwardPin, LOW);
+			digitalWrite(motor[i].reversePin, HIGH);
+		}
+	}
+	else if(direction == 'L') {
+		for(int i = 0; i < 4; ++i) {
+			if(i == 0 || i == 2) {
+				digitalWrite(motor[i].reversePin, LOW);
+				digitalWrite(motor[i].forwardPin, HIGH);
+			}
+			else {
+				digitalWrite(motor[i].forwardPin, LOW);
+				digitalWrite(motor[i].reversePin, HIGH);
+			}
+		}
+	}
+	else if(direction == 'R') {
+		for(int i = 0; i < 4; ++i) {
+			if(i == 0 || i == 2) {
+				digitalWrite(motor[i].forwardPin, LOW);
+				digitalWrite(motor[i].reversePin, HIGH);
+			}
+			else {
+				digitalWrite(motor[i].reversePin, LOW);
+				digitalWrite(motor[i].forwardPin, HIGH);
+			}
+		}
+	}
+}
 
 //*************************************
 //Method to test that that motors are
 //moving either forward or reverse
 //speed is the PWM range 0-100
 //*************************************
-void Move(struct Motors *motor, char direction, int speed) {
+void Forward(struct Motors * motor, int speed) {
 
 	softPwmWrite(motor->enablePin, speed);
 	//******************************************
 	//If reverse direction, turn reverse pin on
 	//and turn off forward pin, else move foward
 	//******************************************
-	if(direction == 'R') {
-        	digitalWrite(motor->forwardPin, LOW);
-        	digitalWrite(motor->reversePin, HIGH);
-    	}
-    	else {
-        	digitalWrite(motor->forwardPin, HIGH);
-        	digitalWrite(motor->reversePin, LOW);
-    	}
 
-	//*******************************
-	//Print pins just to check they
-	//are same as we initialized
-	//******************************
-	printf("Move()\n");
-	printf("EnablePin: %d\n", motor->enablePin);
-	printf("ForwardPin: %d\n", motor->forwardPin);
-	printf("ReversePin: %d\n", motor->reversePin);
+	digitalWrite(motor->reversePin, LOW);
+	digitalWrite(motor->forwardPin, HIGH);
 }
 
-void Stop(bool Yes, struct Motors *motor) {
+void Reverse(struct Motors * motor, int speed) {
+
+	softPwmWrite(motor->enablePin, speed);
+
+	digitalWrite(motor->forwardPin, LOW);
+	digitalWrite(motor->reversePin, HIGH);
+}
+
+void Left(struct Motors * motor1, struct Motors * motor2, struct Motors * motor3, struct Motors * motor4, int speed) {
+	Reverse(motor1, speed);
+	Reverse(motor3, speed);
+	Forward(motor2, speed);
+	Forward(motor4, speed);
+}
+
+void Right(struct Motors * motor1, struct Motors * motor2, struct Motors * motor3, struct Motors * motor4, int speed) {
+	Reverse(motor2, speed);
+	Reverse(motor4, speed);
+	Forward(motor1, speed);
+	Forward(motor3, speed);
+}
+void Stop(bool Yes, struct Motors motors[]) {
 	if(Yes) {
-		digitalWrite(motor->forwardPin, LOW);
-		digitalWrite(motor->reversePin, LOW);
+		for(int i = 0; i < 4; ++i) {
+			digitalWrite(motors[i].forwardPin, LOW);
+			digitalWrite(motors[i].reversePin, LOW);
+		}
 	}
 }

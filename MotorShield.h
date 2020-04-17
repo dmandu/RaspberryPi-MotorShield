@@ -24,10 +24,17 @@ struct Motors {
     int reversePin;
 };
 
+void Move(struct Motors [], char, int);
 
 void Init(struct Motors *, int, int, int);
 
-void Move(struct Motors *, char, int);
+void Forward(struct Motors *, int);
 
-void Stop(bool Yes, struct Motors *);
+void Reverse(struct Motors *, int);
+
+void Left(struct Motors *, struct Motors *, struct Motors *, struct Motors *, int);
+
+void Right(struct Motors *, struct Motors *, struct Motors *, struct Motors *, int);
+
+void Stop(bool Yes, struct Motors []);
 #endif //ASSIGNMENT3_MOTORSHIELD_H

@@ -17,7 +17,7 @@
 #include "MotorShield.h"
 #include "SpeedEncoder.h"
 
-#define SPEEDENCODER 29
+#define SPEEDENCODER 21
 
 int main() {
 	struct Motors motor1;
@@ -52,6 +52,8 @@ int main() {
 	printf("Continuing main.c\n");
 	Move(allMotors, 'L', 30);
 	sleep(3);
+	pthread_cancel(speedEncoderThread);
+	printf("Thread has ended\n");
 	Stop(Yes, allMotors);
  	return 0;
 }

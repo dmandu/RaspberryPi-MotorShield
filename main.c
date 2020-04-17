@@ -13,31 +13,45 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "MotorShield.h"
+#include "SpeedEncoder.h"
+
+#define SPEEDENCODER 29
 
 int main() {
 	struct Motors motor1;
 	struct Motors motor2;
+	struct Motors motor3;
+	struct Motors motor4;
+
 	bool Yes = TRUE;
-	//***************************************************
+
+	pthread_t speedEncoderThread;
+	/***************************************************
 	//These ints are the number of the wiringPi library pins
 	//they correspond to pins 11, 15, and 13 on the actual Pi
 	//I chose these because in the motor shield pdf on iLearn
 	//in the pin description section it has these pins for Motor1
-	//****************************************************
+	****************************************************/
    	Init(&motor1, 0, 3, 2);
 	Init(&motor2, 6, 5, 4);
-   	Move(&motor1, 'R', 50);
-	Move(&motor2, 'R', 50);
-	sleep(5);
-	Stop(Yes, &motor1);
-	Stop(Yes, &motor2);
-	sleep(5);
-	Move(&motor1, 'F', 25);
-	Move(&motor2, 'F', 25);
-	sleep(5);
-	Stop(Yes, &motor1);
-	Stop(Yes, &motor2);
+	Init(&motor3, 12, 14, 13);
+	Init(&motor4, 26, 11, 10);
+	SpeedEncoderInit(SPEEDENCODER);
 
-   	return 0;
+	struct Motors allMotors [] = {motor1, motor2, motor3, motor4};
+
+	int ret = pthread_create(&speedEncoderThread, NULL, &SpeedEncoderMeasureData, NULL);
+	if(ret == 0) {
+		printf("Thread created successfully\n");
+	}
+	else {
+		printf("Error creating thread\n");
+	}
+	printf("Continuing main.c\n");
+	Move(allMotors, 'L', 30);
+	sleep(3);
+	Stop(Yes, allMotors);
+ 	return 0;
 }

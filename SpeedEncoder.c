@@ -15,11 +15,12 @@ void SpeedEncoderInit(int pinNum) {
 
 void * SpeedEncoderMeasureData(void * args) {
 	printf("This is the SpeedEncoderThread. Now reading data\n");
+	int pulses = 0;
+	int rotatioins = 0;
+	int prevData = 0;
+	int data;
 	while(1) {
-		int pulses = 0;
-		int rotations = 0;
-		int data = digitalRead(pin);
-		int prevData = 0;
+		data = digitalRead(pin);
 		printf("\nMeasured Data: %d\n", data);
 		if(data != prevData) {
 			prevData = data;

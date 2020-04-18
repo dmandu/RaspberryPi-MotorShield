@@ -4,6 +4,8 @@
 #include <wiringPi.h>
 #include <pthread.h>
 
+#define PI 3.14
+
 int pin;
 
 void SpeedEncoderInit(int pinNum) {
@@ -19,7 +21,9 @@ void * SpeedEncoderMeasureData(void * args) {
 	int rotatioins = 0;
 	int prevData = 0;
 	int data;
-	while(1) {
+	int * speed = (int *) args[0];
+	bool * movingPtr = (bool *) args[1];
+	while(movingPtr) {
 		data = digitalRead(pin);
 		printf("\nMeasured Data: %d\n", data);
 		if(data != prevData) {
@@ -28,6 +32,8 @@ void * SpeedEncoderMeasureData(void * args) {
 			rotations = pulses/18;
 			printf("\nPulses: %d  Rotations: %d\n", pulses, rotations);
 		}
+		++pulses;
+        *speed = 2*PI*pulses/3*18;
 		pthread_testcancel();
 	}
 }

@@ -56,7 +56,8 @@ void Init(struct Motors *motor, int enable, int forward, int reverse) {
 }
 
 
-void Move(struct Motors motor [], char direction,  int speed) {
+void Move(struct Motors motor [], char direction,  int speed, bool * moving) {
+	*moving = TRUE;
 	for(int i = 0; i < 4; ++i) {
 		printf("Pins of motor%d: E: %d, F: %d, R: %d\n", (i+1), motor[i].enablePin, motor[i].forwardPin, motor[i].reversePin);
 		softPwmWrite(motor[i].enablePin, speed);
@@ -138,11 +139,12 @@ void Right(struct Motors * motor1, struct Motors * motor2, struct Motors * motor
 	Forward(motor1, speed);
 	Forward(motor3, speed);
 }
-void Stop(bool Yes, struct Motors motors[]) {
+void Stop(bool Yes, struct Motors motors[], bool * moving) {
 	if(Yes) {
 		for(int i = 0; i < 4; ++i) {
 			digitalWrite(motors[i].forwardPin, LOW);
 			digitalWrite(motors[i].reversePin, LOW);
 		}
 	}
+	*moving = FLASE;
 }

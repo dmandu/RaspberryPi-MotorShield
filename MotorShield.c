@@ -146,5 +146,5 @@ void Stop(bool Yes, struct Motors motors[], bool * moving) {
 			digitalWrite(motors[i].reversePin, LOW);
 		}
 	}
-	*moving = FLASE;
+	*moving = FALSE;
 }

@@ -24,11 +24,17 @@ int main() {
 	struct Motors motor2;
 	struct Motors motor3;
 	struct Motors motor4;
+	struct MeasureDataArgs threadArgs;
 
-	bool Yes = TRUE;
-	bool isMoving = FALSE;
+	_Bool Yes = TRUE;
+	_Bool isMoving = FALSE;
     	int speed = 0;
 	pthread_t speedEncoderThread;
+
+	threadArgs.speedptr = &speed;
+	threadArgs.movingptr = &isMoving;
+
+	printf("MAIN: threadArgs.speedptr %d, threadArgs.movingptr %d\n MAIN: &threadArgs = %d\n", *threadArgs.speedptr, *threadArgs.movingptr, threadArgs);
 	/***************************************************
 	//These ints are the number of the wiringPi library pins
 	//they correspond to pins 11, 15, and 13 on the actual Pi
@@ -43,8 +49,8 @@ int main() {
 
 	struct Motors allMotors [] = {motor1, motor2, motor3, motor4};
 
-	printf("Speed before thread: %d", speed);
-	int ret = pthread_create(&speedEncoderThread, NULL, &SpeedEncoderMeasureData, &speed);
+	printf("MAIN: Speed before thread: %d\n", speed);
+	int ret = pthread_create(&speedEncoderThread, NULL, &SpeedEncoderMeasureData, &threadArgs);
 	if(ret == 0) {
 		printf("Thread created successfully\n");
 	}
@@ -53,13 +59,12 @@ int main() {
 	}
 	printf("Continuing main.c\n");
 	Move(allMotors, 'L', 30, &isMoving);
-	printf("Speed while thread is running: %d", speed);
-	printf("isMoving = %d", isMoving);
+	printf("MAIN: Speed while thread is running: %d\n", speed);
+	printf("MAIN: isMoving = %d\n", *threadArgs.movingptr);
 	sleep(3);
-	pthread_cancel(speedEncoderThread);
-	printf("Thread has ended\n");
 	Stop(Yes, allMotors, &isMoving);
-	printf("Speed after finished: %d", speed);
-	printf("isMoving = %d", isMoving);
+	sleep(3);
+	printf("MAIN: Speed after finished: %d\n", speed);
+	printf("MAIN: isMoving = %d\n", isMoving);
  	return 0;
 }

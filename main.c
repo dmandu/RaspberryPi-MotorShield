@@ -84,8 +84,13 @@ void InitSPI() {
 
 void * LSICounter(void * args) {
 	unsigned char buffer [50];
+	int speed = 0;
+	int cycles = 0
 	while(1) {
 		wiringPiSPIDataRW(1, buffer, sizeof(buffer));
 		printf("SPI: %s", *buffer);
+		++cycles;
+		speed = 2*3.14*1000000/(18*cycles);
+		printf("SPI: Speed: %d", speed);
 	}
 }

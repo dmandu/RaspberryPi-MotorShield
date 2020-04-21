@@ -19,8 +19,7 @@
 #include "MotorShield.h"
 #include "SpeedEncoder.h"
 
-#define SPEEDENCODER1 21
-#define SPEEDENCODER2 22
+#define SPEEDENCODER1 28
 
 void InitSPI();
 void * LSICounter(void *);
@@ -34,19 +33,13 @@ int main() {
 
 	_Bool Yes = TRUE;
 	_Bool isMoving = FALSE;
-    	int speed = 0;
+	int speed = 0;
 	pthread_t speedEncoderThread;
 	pthread_t lsiThread;
 
 	threadArgs.speedptr = &speed;
 	threadArgs.movingptr = &isMoving;
 
-	/***************************************************
-	//These ints are the number of the wiringPi library pins
-	//they correspond to pins 11, 15, and 13 on the actual Pi
-	//I chose these because in the motor shield pdf on iLearn
-	//in the pin description section it has these pins for Motor1
-	****************************************************/
    	InitSPI();
 	Init(&motor1, 0, 3, 2);
 	Init(&motor2, 6, 5, 4);
@@ -56,30 +49,22 @@ int main() {
 
 	struct Motors allMotors [] = {motor1, motor2, motor3, motor4};
 
-	printf("MAIN: Speed before thread: %d\n", speed);
 	int ret = pthread_create(&speedEncoderThread, NULL, &SpeedEncoderMeasureData, &threadArgs);
-	if(ret == 0) {
-		printf("Thread created successfully\n");
-	}
-	else {
-		printf("Error creating thread\n");
-	}
 	int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
-	printf("Continuing main.c\n");
-	Move(allMotors, 'L', 30, &isMoving);
-	printf("MAIN: Speed while thread is running: %d\n", speed);
-	printf("MAIN: isMoving = %d\n", *threadArgs.movingptr);
+
+	Move(allMotors, 'F', 30, &isMoving);
 	sleep(3);
 	Stop(Yes, allMotors, &isMoving);
-	printf("MAIN: Speed after finished: %d\n", speed);
  	return 0;
 }
 
 void InitSPI() {
 	wiringPiSetup();
-	wiringPiSPISetup(1, 1000000);
+	wiringPiSPISetup(0, 500000);
 
-	pinMode(24, INPUT);
+	pinModeAlt(29, ALT4);
+    pinModeAlt(28, ALT4);
+    pinModeAlt(1, ALT4);
 }
 
 void * LSICounter(void * args) {
@@ -90,7 +75,7 @@ void * LSICounter(void * args) {
 		wiringPiSPIDataRW(1, buffer, sizeof(buffer));
 		printf("SPI: %s", *buffer);
 		++cycles;
-		speed = 2*3.14*1000000/(18*cycles);
+		speed = 2*3.14*500000/(18*cycles);
 		printf("SPI: Speed: %d", speed);
 	}
 }

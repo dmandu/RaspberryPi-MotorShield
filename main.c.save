@@ -64,10 +64,7 @@ int main() {
 }
 
 void InitSPI() {
-	unsigned char buffer [] = {0x88, 0x00, 0x90};
-	unsigned char *data = "10001000";
-	unsigned char *data1 = "00000000";
-	unsigned char *data2 = "10010000";
+	unsigned char data = "
 	pinModeAlt(29, 3);
 	pinModeAlt(28, 3);
 	pinModeAlt(24, 3);
@@ -75,10 +72,10 @@ void InitSPI() {
 
 	wiringPiSPISetup(0, 500000);
 	digitalWrite(CE0, LOW);
-	wiringPiSPIDataRW(0, data, 8);
-	wiringPiSPIDataRW(0, data1, 8);
-	wiringPiSPIDataRW(0, data2, 8);
-	wiringPiSPIDataRW(0, data1, 8);
+	wiringPiSPIDataRW(0, buffer[0], 8);
+	wiringPiSPIDataRW(0, buffer[1], 8);
+	wiringPiSPIDataRW(0, buffer[2], 8);
+	wiringPiSPIDataRW(0, buffer[1], 8);
 	digitalWrite(CE0, HIGH);
 }
 

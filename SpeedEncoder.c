@@ -22,21 +22,24 @@ void * SpeedEncoderMeasureData(void * args) {
 	struct MeasureDataArgs * argptr = (struct MeasureDataArgs *) args;
 	int pulses = 0;
 	int rotations = 0;
-	int prevData = 0;
+	int prevData = 1;
 	int data;
 	int * speed =argptr->speedptr;
 	_Bool * moving = argptr->movingptr;
+	*moving = TRUE;
 	while(*moving) {
 //		printf("\nTHREAD: isMoving: %d\n", *moving);
 		data = digitalRead(pin);
 //		printf("THREAD: Measured Data: %d\n", data);
 		if(data != prevData) {
-			prevData = data;
+			while(data != prevData) {
+				data = digitalRead(pin);
+			}
 			++pulses;
 			rotations = pulses/18;
 			printf("\nTHREAD: Pulses: %d  Rotations: %d\n", pulses, rotations);
 		}
-        	*speed = 2*PI*pulses/(10*18);
+        	*speed = 2*PI*pulses/(5*18);
 		printf("THREAD: Speed: %d\n", *speed);
 	}
 	printf("THREAD: Wheels no longer moving, returning to main\n");

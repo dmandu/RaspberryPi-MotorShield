@@ -58,13 +58,12 @@ int main() {
 	int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
 
 	Move(allMotors, 'F', 30, &isMoving);
-	sleep(10);
+	sleep(5);
 	Stop(Yes, allMotors, &isMoving);
  	return 0;
 }
 
 void InitSPI() {
-	unsigned char buffer [] = {0x88, 0x00, 0x90};
 	unsigned char *data = "10001000";
 	unsigned char *data1 = "00000000";
 	unsigned char *data2 = "10010000";
@@ -91,8 +90,9 @@ void * LSICounter(void * args) {
 		wiringPiSPIDataRW(0, buffer, 2);
 		digitalWrite(CE0, HIGH);
 		printf("SPI: buffer afterRW: %d\n", buffer[1]);
-		++cycles;
+		cycles = buffer[1];
 		speed = 2*3.14*500000/(18*cycles);
+		printf("SPI: Speed: %d\n", speed);
 		sleep(2);
 	}
 }

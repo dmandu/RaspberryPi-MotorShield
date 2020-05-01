@@ -23,10 +23,6 @@
 //setting the pins that are used by each motor
 //******************************************
 void Init(struct Motors *motor, int enable, int forward, int reverse) {
-	if(wiringPiSetup() < 0) {
-		printf("setup failed\n");
-		exit(1);
-    	}
 	//*****************************************
 	//Set the variables of the motor struct
 	//The enable pin and 2 control pins
@@ -57,7 +53,13 @@ void Init(struct Motors *motor, int enable, int forward, int reverse) {
 
 
 void Move(struct Motors motor [], char direction,  int speed, bool * moving) {
-	*moving = TRUE;
+	if(*moving == TRUE) {
+		return;
+	}
+	else {
+		*moving = TRUE;
+	}
+
 	for(int i = 0; i < 4; ++i) {
 		printf("Pins of motor%d: E: %d, F: %d, R: %d\n", (i+1), motor[i].enablePin, motor[i].forwardPin, motor[i].reversePin);
 		softPwmWrite(motor[i].enablePin, speed);

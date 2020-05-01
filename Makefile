@@ -1,2 +1,2 @@
-assignment4: main.c MotorShield.c SpeedEncoder.c
-	gcc -o assignment4 main.c MotorShield.c SpeedEncoder.c -I. -lwiringPi -lpthread
+assignment4: main.c MotorShield.c SpeedEncoder.c DistanceSensor.c
+	gcc -o assignment4 main.c MotorShield.c SpeedEncoder.c DistanceSensor.c -I. -lwiringPi -lpthread

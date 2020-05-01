@@ -17,31 +17,31 @@ void SpeedEncoderInit(int pinNum) {
 	pinMode(pinNum, INPUT);
 }
 
-void * SpeedEncoderMeasureData(void * args) {
-	printf("This is the SpeedEncoderThread. Now reading data\n");
+void * SpeedEncoderRotations(void * args) {
 	struct MeasureDataArgs * argptr = (struct MeasureDataArgs *) args;
 	int pulses = 0;
 	int rotations = 0;
-	int prevData = 1;
+	int dataHigh = 1;
 	int data;
 	int * speed =argptr->speedptr;
 	_Bool * moving = argptr->movingptr;
-	*moving = TRUE;
-	while(*moving) {
-//		printf("\nTHREAD: isMoving: %d\n", *moving);
-		data = digitalRead(pin);
-//		printf("THREAD: Measured Data: %d\n", data);
-		if(data != prevData) {
-			while(data != prevData) {
+	while(1) {
+		if(*moving) {
+			while(rotations != 3) {
 				data = digitalRead(pin);
+				if(data == dataHigh) {
+					while(data != dataHigh) {
+					data = digitalRead(pin);
+					}
+					++pulses;
+					rotations = pulses/20;
+				}
 			}
-			++pulses;
-			rotations = pulses/18;
-			printf("\nTHREAD: Pulses: %d  Rotations: %d\n", pulses, rotations);
+        		*speed = 2*PI*pulses/(10*18);
 		}
-        	*speed = 2*PI*pulses/(5*18);
-		printf("THREAD: Speed: %d\n", *speed);
+		else {
+			pulses = 0;
+			rotations = 0;
+		}
 	}
-	printf("THREAD: Wheels no longer moving, returning to main\n");
-	return 0;
 }

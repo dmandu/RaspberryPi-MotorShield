@@ -32,7 +32,7 @@ void Init(struct Motors *motor, int enable, int forward, int reverse) {
 	motor->enablePin = enable;
 	motor->forwardPin = forward;
 	motor->reversePin = reverse;
-	softPwmCreate(enable, 50, 100);
+	softPwmCreate(enable, 30, 100);
 
 
 	//****************************************
@@ -53,17 +53,10 @@ void Init(struct Motors *motor, int enable, int forward, int reverse) {
 
 
 void Move(struct Motors motor [], char direction,  int speed, bool * moving) {
-	if(*moving == TRUE) {
-		return;
-	}
-	else {
-		*moving = TRUE;
-	}
-
-	for(int i = 0; i < 4; ++i) {
-		printf("Pins of motor%d: E: %d, F: %d, R: %d\n", (i+1), motor[i].enablePin, motor[i].forwardPin, motor[i].reversePin);
-		softPwmWrite(motor[i].enablePin, speed);
-	}
+    *moving = TRUE;
+    for(int i = 0; i < 4; ++i) {
+        softPwmWrite(motor[i].enablePin, speed);
+    }
 
 	if(direction == 'F') {
 		for(int i = 0; i < 4; ++i) {
@@ -77,7 +70,7 @@ void Move(struct Motors motor [], char direction,  int speed, bool * moving) {
 			digitalWrite(motor[i].reversePin, HIGH);
 		}
 	}
-	else if(direction == 'L') {
+	else if(direction == 'R') {
 		for(int i = 0; i < 4; ++i) {
 			if(i == 0 || i == 2) {
 				digitalWrite(motor[i].reversePin, LOW);
@@ -89,7 +82,7 @@ void Move(struct Motors motor [], char direction,  int speed, bool * moving) {
 			}
 		}
 	}
-	else if(direction == 'R') {
+	else if(direction == 'L') {
 		for(int i = 0; i < 4; ++i) {
 			if(i == 0 || i == 2) {
 				digitalWrite(motor[i].forwardPin, LOW);
@@ -141,6 +134,29 @@ void Right(struct Motors * motor1, struct Motors * motor2, struct Motors * motor
 	Forward(motor1, speed);
 	Forward(motor3, speed);
 }
+
+
+void SmoothRight(struct Motors [] motors, int speed, bool * moving) {
+    Move(motors,'F', 30, moving);
+
+    for(int i = 0; i < 4; ++i) {
+        if(i == 0 || i == 2) {
+            softPwmWrite(motor[i].enablePin, speed);
+        }
+    }
+}
+
+void SmoothLeft(struct Motors [] motors, int speed, bool * moving) {
+    Move(motors,'F', 30, moving);
+
+    for(int i = 2; i < 4; ++i) {
+        if(i == 1 || i == 3) {
+            softPwmWrite(motor[i].enablePin, speed);
+        }
+    }
+}
+
+
 void Stop(bool Yes, struct Motors motors[], bool * moving) {
 	if(Yes) {
 		for(int i = 0; i < 4; ++i) {

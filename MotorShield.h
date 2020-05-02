@@ -36,5 +36,9 @@ void Left(struct Motors *, struct Motors *, struct Motors *, struct Motors *, in
 
 void Right(struct Motors *, struct Motors *, struct Motors *, struct Motors *, int);
 
+void SmoothRight(struct Motors [], int, bool *);
+
+void SmoothLeft(struct Motors [], int, bool *);
+
 void Stop(bool Yes, struct Motors [], bool *);
 #endif //ASSIGNMENT3_MOTORSHIELD_H

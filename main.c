@@ -22,39 +22,42 @@
 
 #define SPEEDENCODER1 30
 #define IRSENSORLEFT 27
-#define IRSENSORRIGHT 21
-#define IRSENSORMID 22
-#define DISTANCESENSORTRIGGER 23
-#define DISTANCESENSORECHO 7
-#define OBSTACLESENSOR 25
-
+#define IRSENSORMID 28
+#define IRSENSORRIGHT 29
+#define DISTANCESENSORTRIGGER 21
+#define DISTANCESENSORECHO 22
+#define OBSTACLESENSOR 7
+/*
 #define CE0 1
 #define MISO 24
 #define MOSI 28
 #define SCLK 29
-
 void InitSPI();
+ */
 void InitMotors();
 void InitSensors();
 void * LSICounter(void *);
+
+_Bool Yes = TRUE;
+_Bool isMoving = FALSE;
+_Bool obstacle = FALSE;
+_Bool isTrail = TRUE;
+
+int speed = 0;
 
 struct Motors motor1;
 struct Motors motor2;
 struct Motors motor3;
 struct Motors motor4;
+struct Motors allMotors;
+
+struct MeasureDataArgs threadArgs;
+
+pthread_t speedEncoderThread;
+//pthread_t lsiThread;
 
 int main() {
 	wiringPiSetup();
-	struct MeasureDataArgs threadArgs;
-
-	_Bool Yes = TRUE;
-	_Bool isMoving = FALSE;
-	_Bool obstacle = FALSE;
-	int speed = 0;
-
-	pthread_t speedEncoderThread;
-	pthread_t lsiThread;
-
 	threadArgs.speedptr = &speed;
 	threadArgs.movingptr = &isMoving;
 
@@ -65,31 +68,16 @@ int main() {
 
 	struct Motors allMotors [] = {motor1, motor2, motor3, motor4};
 
-	int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
+	//int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
+    Move(allMotors, 'F', 30, &isMoving);
 
-	while(1) {
-		Move(allMotors, 'F', 30, &isMoving);
-		if(MeasureDistance() <= 100) {
-			obstacle = TRUE;
-			Stop(Yes, allMotors, &isMoving);
-			sleep(3);
-			if(MeasureDistance() <= 100) {
-				while(digitalRead(OBSTACLESENSOR) == 1) {
-					pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
-					Move(allMotors, 'R', 30, &isMoving);
-				}
-				Stop(Yes, allMotors, &isMoving);
-			}
-			while(digitalRead(OBSTACLESENSOR) == 0) {
-				Move(allMotors, 'F', 30, &isMoving);
-			}
-			Stop(Yes, allMotors, &isMoving);
-			while(digitalRead(OBSTACLESENSOR) == 1) {
-				Move(allMotors, 'L', 30, &isMoving);
-			}
-			Stop(Yes, allMotors, &isMoving);
-		}
+    while(isTrail) {
+		CheckEchoSensor();
+		CheckIRSensors();
 	}
+    Stop(Yes, allMotors, *isMoving);
+    printf("No trail to follow");
+    return 1;
 }
 
 
@@ -99,6 +87,7 @@ void InitMotors() {
 	Init(&motor3, 12, 14, 13);
 	Init(&motor4, 26, 11, 10);
 }
+
 
 void InitSensors() {
 	pinMode(IRSENSORLEFT, INPUT);
@@ -110,12 +99,56 @@ void InitSensors() {
 }
 
 
+void CheckEchoSensor() {
+    if(MeasureDistance() <= 20) {
+        obstacle = TRUE;
+        Stop(Yes, allMotors, &isMoving);
+        sleep(3);
+        if(MeasureDistance() <= 20) {
+            while(digitalRead(OBSTACLESENSOR) == 1) {
+                pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
+                Move(allMotors, 'R', 30, &isMoving);
+                pthread_join(speedEncoderThread);
+            }
+            Stop(Yes, allMotors, &isMoving);
+        }
+        while(digitalRead(OBSTACLESENSOR) == 0) {
+            Move(allMotors, 'F', 30, &isMoving);
+        }
+        Stop(Yes, allMotors, &isMoving);
+        while(digitalRead(OBSTACLESENSOR) == 1) {
+            pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
+            Move(allMotors, 'L', 30, &isMoving);
+            pthread_join(speedEncoderThread);
+        }
+        Stop(Yes, allMotors, &isMoving);
+    }
+}
+
+
+void CheckIRSensors() {
+    if(digitalRead(IRSENSORLEFT) != 0) {
+        //steer to the right
+        while(digitalRead(IRSENSORLEFT) != 0) {
+            SmoothRight(allMotors, 50, *isMoving)
+        }
+        Move(allMotors, 'F', 30, *isMoving);
+    }
+    else if(digitalRead(IRSENSORRIGHT) != 0) {
+        //steer to the left
+        while(digitalRead(IRSENSORRIGHT) != 0) {
+            SmoothLeft(allMotors, 50, *isMoving)
+        }
+        Move(allMotors, 'F', 30, *isMoving);
+    }
+    else if(digitalRead(IRSENSORMID) != 1){
+        isTrail = FALSE;
+    }
+}
 
 
 
-
-
-
+/*
 void InitSPI() {
 	unsigned char *data = "10001000";
 	unsigned char *data1 = "00000000";
@@ -149,3 +182,4 @@ void * LSICounter(void * args) {
 		sleep(2);
 	}
 }
+*/

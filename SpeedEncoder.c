@@ -25,23 +25,15 @@ void * SpeedEncoderRotations(void * args) {
 	int data;
 	int * speed =argptr->speedptr;
 	_Bool * moving = argptr->movingptr;
-	while(1) {
-		if(*moving) {
-			while(rotations != 3) {
-				data = digitalRead(pin);
-				if(data == dataHigh) {
-					while(data != dataHigh) {
-					data = digitalRead(pin);
-					}
-					++pulses;
-					rotations = pulses/20;
-				}
-			}
-        		*speed = 2*PI*pulses/(10*18);
-		}
-		else {
-			pulses = 0;
-			rotations = 0;
-		}
+	while(rotations != 3) {
+	    data = digitalRead(pin);
+	    if(data == dataHigh) {
+            while (data != dataHigh) {
+                data = digitalRead(pin);
+            }
+            ++pulses;
+            rotations = pulses / 20;
+        }
 	}
+	pthread_exit(NULL);
 }

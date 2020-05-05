@@ -131,21 +131,23 @@ void CheckEchoSensor() {
 
 
 void CheckIRSensors() {
-    if(digitalRead(IRSENSORLEFT) != 0) {
+    int high = 0;
+    int low = 1;
+    if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == low) {
         //steer to the right
-        while(digitalRead(IRSENSORLEFT) != 0) {
-            SmoothRight(allMotors, 50, *isMoving)
-        }
-        Move(allMotors, 'F', 30, *isMoving);
-    }
-    else if(digitalRead(IRSENSORRIGHT) != 0) {
-        //steer to the left
-        while(digitalRead(IRSENSORRIGHT) != 0) {
+        while(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == low) {
             SmoothLeft(allMotors, 50, *isMoving)
         }
         Move(allMotors, 'F', 30, *isMoving);
     }
-    else if(digitalRead(IRSENSORMID) != 1){
+    else if(digitalRead(IRSENSORRIGHT) == high && digitalRead(IRSENSORMID) == low) {
+        //steer to the left
+        while(digitalRead(IRSENSORRIGHT) == high && digitalRead(IRSENSORMID) == low) {
+            SmoothRight(allMotors, 50, *isMoving)
+        }
+        Move(allMotors, 'F', 30, *isMoving);
+    }
+    else if(digitalRead(IRSENSORMID) == low && digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORRIGHT) == low){
         isTrail = FALSE;
     }
 }

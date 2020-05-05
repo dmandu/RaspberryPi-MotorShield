@@ -8,4 +8,6 @@ void InitDistanceSensor(int, int);
 
 double MeasureDistance();
 
+void avoidObstacle(int * action);
+
 #endif //DISTANCESENSOR_H

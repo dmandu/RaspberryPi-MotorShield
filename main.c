@@ -111,17 +111,21 @@ void CheckEchoSensor() {
                 pthread_join(speedEncoderThread);
             }
             Stop(Yes, allMotors, &isMoving);
+            while(digitalRead(OBSTACLESENSOR) == 0) {
+                Move(allMotors, 'F', 30, &isMoving);
+            }
+            Stop(Yes, allMotors, &isMoving);
+            while(digitalRead(OBSTACLESENSOR) == 1) {
+                pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
+                Move(allMotors, 'L', 30, &isMoving);
+                pthread_join(speedEncoderThread);
+            }
+            Stop(Yes, allMotors, &isMoving);
+            while(digitalRead(OBSTACLESENSOR) == 0) {
+                Move(allMotors, 'F', 30, &isMoving);
+            }
+            Stop(Yes, allMotors, &isMoving);
         }
-        while(digitalRead(OBSTACLESENSOR) == 0) {
-            Move(allMotors, 'F', 30, &isMoving);
-        }
-        Stop(Yes, allMotors, &isMoving);
-        while(digitalRead(OBSTACLESENSOR) == 1) {
-            pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
-            Move(allMotors, 'L', 30, &isMoving);
-            pthread_join(speedEncoderThread);
-        }
-        Stop(Yes, allMotors, &isMoving);
     }
 }
 

@@ -32,7 +32,7 @@ double MeasureDistance() {
 	time = start- end;
 
 	distance = (time*340)/2.0;
-
+    printf("Distance to object: %d", distance);
 	return distance*.01;
 }
 

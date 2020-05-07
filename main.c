@@ -118,9 +118,9 @@ void CheckEchoSensor() {
         sleep(3);
         if(MeasureDistance() <= 20) {
             while(digitalRead(OBSTACLESENSOR) == 1) {
-                pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
+                //pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
                 Move(allMotors, 'R', 30, &isMoving);
-                pthread_join(speedEncoderThread, NULL);
+                //pthread_join(speedEncoderThread, NULL);
             }
             Stop(Yes, allMotors, &isMoving);
             while(digitalRead(OBSTACLESENSOR) == 0) {
@@ -128,9 +128,9 @@ void CheckEchoSensor() {
             }
             Stop(Yes, allMotors, &isMoving);
             while(digitalRead(OBSTACLESENSOR) == 1) {
-                pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
+                //pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
                 Move(allMotors, 'L', 30, &isMoving);
-                pthread_join(speedEncoderThread, NULL);
+                //pthread_join(speedEncoderThread, NULL);
             }
             Stop(Yes, allMotors, &isMoving);
             while(digitalRead(OBSTACLESENSOR) == 0) {

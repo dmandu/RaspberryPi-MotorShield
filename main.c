@@ -147,6 +147,18 @@ void CheckIRSensors() {
         }
         Move(allMotors, 'F', 30, *isMoving);
     }
+    else if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high) {
+        //turn left
+        pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
+        Move(allMotors, 'L', 30, &isMoving);
+        pthread_join(speedEncoderThread);
+    }
+    else if(digitalRead(IRSENSORRIGHT) == high && digitalRead(IRSENSORMID) == high) {
+        //turn left
+        pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
+        Move(allMotors, 'R', 30, &isMoving);
+        pthread_join(speedEncoderThread);
+    }
     else if(digitalRead(IRSENSORMID) == low && digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORRIGHT) == low){
         isTrail = FALSE;
     }

@@ -18,6 +18,7 @@ void SpeedEncoderInit(int pinNum) {
 }
 
 void * SpeedEncoderRotations(void * args) {
+	printf("THREAD: Running Rotations Thread");
 	struct MeasureDataArgs * argptr = (struct MeasureDataArgs *) args;
 	int pulses = 0;
 	int rotations = 0;

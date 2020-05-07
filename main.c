@@ -11,6 +11,7 @@
 ******************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
 #include <pthread.h>
@@ -36,6 +37,8 @@ void InitSPI();
  */
 void InitMotors();
 void InitSensors();
+void CheckIRSensors();
+void CheckEchoSensor();
 void * LSICounter(void *);
 
 _Bool Yes = TRUE;
@@ -49,7 +52,7 @@ struct Motors motor1;
 struct Motors motor2;
 struct Motors motor3;
 struct Motors motor4;
-struct Motors allMotors;
+struct Motors allMotors [4];
 
 struct MeasureDataArgs threadArgs;
 
@@ -61,7 +64,7 @@ int main() {
 	threadArgs.speedptr = &speed;
 	threadArgs.movingptr = &isMoving;
 
-   	InitSPI();
+//   	InitSPI();
 	InitMotors();
 	InitSensors();
 	SpeedEncoderInit(SPEEDENCODER1);
@@ -69,21 +72,28 @@ int main() {
 	struct Motors allMotors [] = {motor1, motor2, motor3, motor4};
 
 	//int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
-    Move(allMotors, 'F', 30, &isMoving);
-
-    while(isTrail) {
+    	Move(allMotors, 'F', 30, &isMoving);
+   	while(isTrail) {
 		CheckEchoSensor();
 		CheckIRSensors();
 	}
-    Stop(Yes, allMotors, *isMoving);
-    printf("No trail to follow");
-    return 1;
+//	sleep(5);
+ 	Stop(Yes, allMotors,&isMoving);
+    	printf("No trail to follow");
+    	return 1;
 }
 
 
+
+
+
+
+
+
+
 void InitMotors() {
-	Init(&motor1, 0, 3, 2);
-	Init(&motor2, 6, 5, 4);
+	Init(&motor1, 0, 2, 3);
+	Init(&motor2, 6, 4, 5);
 	Init(&motor3, 12, 14, 13);
 	Init(&motor4, 26, 11, 10);
 }
@@ -100,7 +110,9 @@ void InitSensors() {
 
 
 void CheckEchoSensor() {
+    printf("measuring distance");
     if(MeasureDistance() <= 20) {
+	printf("POTENTIAL OBSTACLE");
         obstacle = TRUE;
         Stop(Yes, allMotors, &isMoving);
         sleep(3);
@@ -108,7 +120,7 @@ void CheckEchoSensor() {
             while(digitalRead(OBSTACLESENSOR) == 1) {
                 pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
                 Move(allMotors, 'R', 30, &isMoving);
-                pthread_join(speedEncoderThread);
+                pthread_join(speedEncoderThread, NULL);
             }
             Stop(Yes, allMotors, &isMoving);
             while(digitalRead(OBSTACLESENSOR) == 0) {
@@ -118,7 +130,7 @@ void CheckEchoSensor() {
             while(digitalRead(OBSTACLESENSOR) == 1) {
                 pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
                 Move(allMotors, 'L', 30, &isMoving);
-                pthread_join(speedEncoderThread);
+                pthread_join(speedEncoderThread, NULL);
             }
             Stop(Yes, allMotors, &isMoving);
             while(digitalRead(OBSTACLESENSOR) == 0) {
@@ -131,33 +143,37 @@ void CheckEchoSensor() {
 
 
 void CheckIRSensors() {
-    int high = 0;
-    int low = 1;
-    if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == low) {
+    int high = 1;
+    int low = 0;
+    printf("Checking IR");
+    if(digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == low) {
+	Move(allMotors, 'F', 30, &isMoving);
+    }
+    else if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == low) {
         //steer to the right
         while(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == low) {
-            SmoothLeft(allMotors, 50, *isMoving)
+            SmoothLeft(allMotors, 50, &isMoving);
         }
-        Move(allMotors, 'F', 30, *isMoving);
+        Move(allMotors, 'F', 30, &isMoving);
     }
     else if(digitalRead(IRSENSORRIGHT) == high && digitalRead(IRSENSORMID) == low) {
         //steer to the left
         while(digitalRead(IRSENSORRIGHT) == high && digitalRead(IRSENSORMID) == low) {
-            SmoothRight(allMotors, 50, *isMoving)
+            SmoothRight(allMotors, 50, &isMoving);
         }
-        Move(allMotors, 'F', 30, *isMoving);
+        Move(allMotors, 'F', 30, &isMoving);
     }
     else if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high) {
         //turn left
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
         Move(allMotors, 'L', 30, &isMoving);
-        pthread_join(speedEncoderThread);
+        pthread_join(speedEncoderThread, NULL);
     }
     else if(digitalRead(IRSENSORRIGHT) == high && digitalRead(IRSENSORMID) == high) {
         //turn left
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
         Move(allMotors, 'R', 30, &isMoving);
-        pthread_join(speedEncoderThread);
+        pthread_join(speedEncoderThread, NULL);
     }
     else if(digitalRead(IRSENSORMID) == low && digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORRIGHT) == low){
         isTrail = FALSE;

@@ -17,24 +17,34 @@ void InitDistanceSensor(int trigger, int echo) {
 	pinMode(echoPin, INPUT);
 }
 
+
 double MeasureDistance() {
 	clock_t start, end, time;
 	double distance;
-	printf("Measuring Distance");
+
 	digitalWrite(triggerPin, HIGH);
 	delayMicroseconds(10);
 	digitalWrite(triggerPin, LOW);
-	while(digitalRead(echoPin) == 1) {
+	while(digitalRead(echoPin) == 0) {
 		start = clock();
 	}
-	end = clock();
-
-	time = start- end;
-
+	while(digitalRead(echoPin) == 1) {
+		end = clock();
+	}
+	time = (end - start);
+	printf("time: %f\n", time);
 	distance = (time*340)/2.0;
-    printf("Distance to object: %d", distance);
-	return distance*.01;
+        printf("Distance to object: %f\n", distance*100/CLOCKS_PER_SEC);
+	return distance*100/CLOCKS_PER_SEC;
 }
+
+
+
+
+
+
+
+
 
 void avoidObstacle(int * action) {
     if(MeasureDistance() <= 20) {

@@ -36,5 +36,5 @@ void * SpeedEncoderRotations(void * args) {
             rotations = pulses / 20;
         }
 	}
-	pthread_exit(NULL);
+	return NULL;
 }

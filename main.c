@@ -147,6 +147,7 @@ void CheckIRSensors(struct Motors allMotors []) {
     int high = 0;
     int low = 1;
     printf("Checking IR\n");
+    printf("Left: %d, Mid: %d, Right: %d\n", digitalRead(IRSENSORLEFT), digitalRead(IRSENSORMID), digitalRead(IRSENSORRIGHT));
     if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
 	    printf("Moving foward\n");
 	    Move(allMotors, 'F', 10, &isMoving);

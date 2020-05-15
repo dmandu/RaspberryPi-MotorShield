@@ -144,8 +144,8 @@ void CheckEchoSensor(struct Motors allMotors []) {
 
 
 void CheckIRSensors(struct Motors allMotors []) {
-    int high = 0;
-    int low = 1;
+    int high = 1;
+    int low = 0;
     printf("Checking IR\n");
     if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
 	    printf("Moving foward\n");
@@ -153,7 +153,7 @@ void CheckIRSensors(struct Motors allMotors []) {
     }
     else if(digitalRead(IRSENSORLEFT) == low) {
         //steer to the right
-	    printf("SteeringLeft\n");
+	    printf("SteeringRight\n");
         while(digitalRead(IRSENSORLEFT) == low) {
             SmoothRight(allMotors, 50, &isMoving);
         }
@@ -161,7 +161,7 @@ void CheckIRSensors(struct Motors allMotors []) {
     }
     else if(digitalRead(IRSENSORRIGHT) == low) {
         //steer to the left
-	    printf("SteeringRight\n");
+	    printf("SteeringLeft\n");
         while(digitalRead(IRSENSORRIGHT) == low) {
             SmoothLeft(allMotors, 50, &isMoving);
         }

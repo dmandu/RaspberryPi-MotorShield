@@ -151,7 +151,7 @@ void CheckIRSensors(struct Motors allMotors []) {
 	    printf("Moving foward\n");
 	    Move(allMotors, 'F', 10, &isMoving);
     }
-    else if(digitalRead(IRSENSORLEFT) == low) {
+    else if(digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
         //steer to the right
 	    printf("SteeringRight\n");
         while(digitalRead(IRSENSORLEFT) == low) {
@@ -159,7 +159,7 @@ void CheckIRSensors(struct Motors allMotors []) {
         }
         Move(allMotors, 'F', 10, &isMoving);
     }
-    else if(digitalRead(IRSENSORRIGHT) == low) {
+    else if(digitalRead(IRSENSORRIGHT) == low && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORLEFT) == high) {
         //steer to the left
 	    printf("SteeringLeft\n");
         while(digitalRead(IRSENSORRIGHT) == low) {

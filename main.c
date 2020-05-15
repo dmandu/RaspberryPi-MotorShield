@@ -144,8 +144,8 @@ void CheckEchoSensor(struct Motors allMotors []) {
 
 
 void CheckIRSensors(struct Motors allMotors []) {
-    int high = 1;
-    int low = 0;
+    int high = 0;
+    int low = 1;
     printf("Checking IR\n");
     if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
 	    printf("Moving foward\n");

@@ -168,7 +168,7 @@ void CheckIRSensors(struct Motors allMotors []) {
         }
         Move(allMotors, 'F', 10, &isMoving);
    }
-    else if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == low) {
+    /*else if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == low) {
         //turn left
 	    printf("Turn Left 90\n");
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
@@ -181,7 +181,7 @@ void CheckIRSensors(struct Motors allMotors []) {
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
         Move(allMotors, 'R', 10, &isMoving);
         pthread_join(speedEncoderThread, NULL);
-    }
+    }*/
     else if(digitalRead(IRSENSORMID) == low && digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORRIGHT) == low){
         printf("No trail\n");
 	    isTrail = FALSE;

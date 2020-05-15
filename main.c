@@ -156,7 +156,7 @@ void CheckIRSensors(struct Motors allMotors []) {
         //steer to the right
 	    printf("SteeringRight\n");
         while(digitalRead(IRSENSORLEFT) == low) {
-            SmoothRight(allMotors, 30, &isMoving);
+            SmoothRight(allMotors, 50, &isMoving);
         }
         Move(allMotors, 'F', 10, &isMoving);
     }
@@ -164,7 +164,7 @@ void CheckIRSensors(struct Motors allMotors []) {
         //steer to the left
 	    printf("SteeringLeft\n");
         while(digitalRead(IRSENSORRIGHT) == low) {
-            SmoothLeft(allMotors, 30, &isMoving);
+            SmoothLeft(allMotors, 50, &isMoving);
         }
         Move(allMotors, 'F', 10, &isMoving);
    }

@@ -71,7 +71,7 @@ int main() {
 	struct Motors allMotors [] = {motor1, motor2, motor3, motor4};
 
 	//int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
-    	Move(allMotors, 'F', 10, &isMoving);
+	Move(allMotors, 'F', 15, &isMoving);
    	while(isTrail) {
 		CheckEchoSensor(allMotors);
 		CheckIRSensors(allMotors);

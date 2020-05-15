@@ -148,12 +148,12 @@ void CheckIRSensors(struct Motors allMotors []) {
     int low = 0;
     printf("Checking IR\n");
     if(digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == low) {
-	printf("Moving foward\n");
-	Move(allMotors, 'F', 10, &isMoving);
+	    printf("Moving foward\n");
+	    Move(allMotors, 'F', 10, &isMoving);
     }
     else if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == low) {
         //steer to the right
-	printf("SteeringLeft\n");
+	    printf("SteeringLeft\n");
         while(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == low) {
             SmoothLeft(allMotors, 50, &isMoving);
         }
@@ -161,7 +161,7 @@ void CheckIRSensors(struct Motors allMotors []) {
     }
     else if(digitalRead(IRSENSORRIGHT) == high && digitalRead(IRSENSORMID) == low) {
         //steer to the left
-	printf("SteeringRight\n");
+	    printf("SteeringRight\n");
         while(digitalRead(IRSENSORRIGHT) == high && digitalRead(IRSENSORMID) == low) {
             SmoothRight(allMotors, 50, &isMoving);
         }
@@ -169,21 +169,22 @@ void CheckIRSensors(struct Motors allMotors []) {
    }
     else if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high) {
         //turn left
-	printf("Turn Left 90\n");
+	    printf("Turn Left 90\n");
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
         Move(allMotors, 'L', 10, &isMoving);
         pthread_join(speedEncoderThread, NULL);
     }
     else if(digitalRead(IRSENSORRIGHT) == high && digitalRead(IRSENSORMID) == high) {
         //turn left
-	printf("Turn right 90\n");
+	    printf("Turn right 90\n");
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
         Move(allMotors, 'R', 10, &isMoving);
         pthread_join(speedEncoderThread, NULL);
     }
     else if(digitalRead(IRSENSORMID) == low && digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORRIGHT) == low){
         printf("No trail\n");
-	isTrail = FALSE;
+	    //isTrail = FALSE;
+	    Move(allMotors, 'F', 5, &isMoving);
     }
 }
 

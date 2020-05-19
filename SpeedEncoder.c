@@ -34,6 +34,7 @@ void * SpeedEncoderRotations(void * args) {
             }
             ++pulses;
             rotations = pulses / 20;
+            printf("Rotations: %d", rotations);
         }
 	}
 	return NULL;

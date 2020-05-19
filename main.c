@@ -108,14 +108,13 @@ void InitSensors() {
 
 
 void CheckEchoSensor(struct Motors allMotors []) {
-    printf("measuring distance\n");
     if(MeasureDistance() <= 10.0) {
-	printf("POTENTIAL OBSTACLE\n");
-        obstacle = TRUE;
+	    printf("POTENTIAL OBSTACLE\n");
+	    obstacle = TRUE;
         Stop(Yes, allMotors, &isMoving);
         sleep(3);
         if(MeasureDistance() <= 10.0) {
-	    printf("Obstacle still there\n");
+            printf("Obstacle still there\n");
             while(digitalRead(OBSTACLESENSOR) == 1) {
                 pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
                 Move(allMotors, 'R', 20, &isMoving);

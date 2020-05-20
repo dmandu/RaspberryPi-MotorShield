@@ -74,12 +74,12 @@ int main() {
 
     struct Motors allMotors [4] = {motor1, motor2, motor3, motor4};
     //int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
-	Move(&allMotors, 'F', 15, &isMoving);
+	Move(allMotors, 'F', 15, &isMoving);
    	while(isTrail) {
-		CheckEchoSensor(&allMotors);
-		CheckIRSensors(&allMotors);
+		CheckEchoSensor(allMotors);
+		CheckIRSensors(allMotors);
 	}
-	Stop(Yes, &allMotors,&isMoving);
+	Stop(Yes, allMotors,&isMoving);
    	printf("No trail to follow");
     return 1;
 }
@@ -120,24 +120,24 @@ void CheckEchoSensor(struct Motors * allMotors []) {
             printf("Obstacle still there\n");
             while(digitalRead(OBSTACLESENSOR) == 1) {
                 pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
-                Move(&allMotors, 'R', 20, &isMoving);
+                Move(allMotors, 'R', 20, &isMoving);
                 pthread_join(speedEncoderThread, NULL);
             }
-            Stop(Yes, &allMotors, &isMoving);
+            Stop(Yes, allMotors, &isMoving);
             while(digitalRead(OBSTACLESENSOR) == 0) {
-                Move(&allMotors, 'F', 20, &isMoving);
+                Move(allMotors, 'F', 20, &isMoving);
             }
-            Stop(Yes, &allMotors, &isMoving);
+            Stop(Yes, allMotors, &isMoving);
             while(digitalRead(OBSTACLESENSOR) == 1) {
                 pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
-                Move(&allMotors, 'L', 20, &isMoving);
+                Move(allMotors, 'L', 20, &isMoving);
                 pthread_join(speedEncoderThread, NULL);
             }
-            Stop(Yes, &allMotors, &isMoving);
+            Stop(Yes, allMotors, &isMoving);
             while(digitalRead(OBSTACLESENSOR) == 0) {
-                Move(&allMotors, 'F', 20, &isMoving);
+                Move(allMotors, 'F', 20, &isMoving);
             }
-            Stop(Yes, &allMotors, &isMoving);
+            Stop(Yes, allMotors, &isMoving);
         }
     }
 }
@@ -149,17 +149,17 @@ void CheckIRSensors(struct Motors * allMotors []) {
     printf("Left: %d, Mid: %d, Right: %d\n", digitalRead(IRSENSORLEFT), digitalRead(IRSENSORMID), digitalRead(IRSENSORRIGHT));
     if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
 	    printf("Moving foward\n");
-	    Move(&allMotors, 'F', 15, &isMoving);
+	    Move(allMotors, 'F', 15, &isMoving);
     }
     else if(digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
         //steer to the right
 	    printf("SteeringRight\n");
-	    SmoothRight(&allMotors, 70, &isMoving);
+	    SmoothRight(allMotors, 70, &isMoving);
     }
     else if(digitalRead(IRSENSORRIGHT) == low && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORLEFT) == high) {
         //steer to the left
 	    printf("SteeringLeft\n");
-	    SmoothLeft(&allMotors, 70, &isMoving);
+	    SmoothLeft(allMotors, 70, &isMoving);
    }
     /*else if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == low) {
         //turn left
@@ -179,7 +179,7 @@ void CheckIRSensors(struct Motors * allMotors []) {
         printf("No trail\n");
 	    isTrail = FALSE;
     }
-    Move(&allMotors, 'F', 15, &isMoving);
+    Move(allMotors, 'F', 15, &isMoving);
 }
 
 

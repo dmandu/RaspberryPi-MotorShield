@@ -77,6 +77,7 @@ int main() {
 	Move(allMotors, 'F', 10, &isMoving);
    	while(isTrail) {
 		CheckEchoSensor(allMotors);
+		sleep(1);
 		CheckIRSensors(allMotors);
 	}
 	Stop(Yes, allMotors,&isMoving);
@@ -118,28 +119,32 @@ void CheckEchoSensor(struct Motors allMotors []) {
         sleep(3);
         if(MeasureDistance() <= 30.0) {
             printf("Obstacle still there\n");
-            while(digitalRead(OBSTACLESENSOR) == 1) {
-                pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
-                Move(allMotors, 'R', 40, &isMoving);
-                pthread_join(speedEncoderThread, NULL);
-            }
-            Stop(Yes, allMotors, &isMoving);
-            while(digitalRead(OBSTACLESENSOR) == 0) {
-                Move(allMotors, 'F', 20, &isMoving);
-            }
-            Stop(Yes, allMotors, &isMoving);
-            while(digitalRead(OBSTACLESENSOR) == 1) {
-                pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
-                Move(allMotors, 'L', 40, &isMoving);
-                pthread_join(speedEncoderThread, NULL);
-            }
-            Stop(Yes, allMotors, &isMoving);
-            while(digitalRead(OBSTACLESENSOR) == 0) {
-                Move(allMotors, 'F', 20, &isMoving);
-            }
-            Stop(Yes, allMotors, &isMoving);
+            maneuverObject(allMotors);
         }
     }
+}
+
+void maneuverObject(struct Motors motors []) {
+    while(digitalRead(OBSTACLESENSOR) == 1) {
+        pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
+        Move(allMotors, 'R', 40, &isMoving);
+        pthread_join(speedEncoderThread, NULL);
+    }
+    Stop(Yes, allMotors, &isMoving);
+    while(digitalRead(OBSTACLESENSOR) == 0) {
+        Move(allMotors, 'F', 20, &isMoving);
+    }
+    Stop(Yes, allMotors, &isMoving);
+    while(digitalRead(OBSTACLESENSOR) == 1) {
+        pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
+        Move(allMotors, 'L', 40, &isMoving);
+        pthread_join(speedEncoderThread, NULL);
+    }
+    Stop(Yes, allMotors, &isMoving);
+    while(digitalRead(OBSTACLESENSOR) == 0) {
+        Move(allMotors, 'F', 20, &isMoving);
+    }
+    Stop(Yes, allMotors, &isMoving);
 }
 
 

@@ -38,30 +38,27 @@ double MeasureDistance() {
 }
 
 
-
-
-
-
-
-
-
 void avoidObstacle(int * action) {
     if(MeasureDistance() <= 20) {
         *action = 0;
         sleep(3);
-        if(MeasureDistance() <= 20) {
-            while(digitalRead(OBSTACLESENSOR) == 1) {
-                *action = 3;
-            }
-            *action = 0;
+        if (MeasureDistance() <= 20) {
+            maneuverObstacle(action);
         }
-        while(digitalRead(OBSTACLESENSOR) == 0) {
-            *action = 1;
-        }
-        *action = 0;
-        while(digitalRead(OBSTACLESENSOR) == 1) {
-            *action = 2;
-        }
-        *action = 0;
     }
+}
+
+void maneuverObstacle(int * action) {
+    while(digitalRead(OBSTACLESENSOR) == 1) {
+        *action = 3;
+    }
+    *action = 0;
+    while(digitalRead(OBSTACLESENSOR) == 0) {
+        *action = 1;
+    }
+    *action = 0;
+    while(digitalRead(OBSTACLESENSOR) == 1) {
+        *action = 2;
+    }
+    *action = 0;
 }

@@ -176,7 +176,7 @@ void CheckIRSensors(struct Motors allMotors []) {
     }
     if(leftIR == high && midIR == high && rightIR == high) {
 	    printf("Moving foward\n");
-	    Move(allMotors, 'F', 23, &isMoving);
+	    Move(allMotors, 'F', 15, &isMoving);
     }/*
     else if(digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
         //steer to the right
@@ -190,15 +190,16 @@ void CheckIRSensors(struct Motors allMotors []) {
    }*/
     else if(leftIR == high && midIR == high && rightIR == low) {
         //turn left
-        Move(allMotors, 'L', 23, &isMoving);
+        Move(allMotors, 'L', 15, &isMoving);
     }
     else if(leftIR == high && midIR == high && leftIR == low) {
         //turn left
-        Move(allMotors, 'R', 23, &isMoving);
+        Move(allMotors, 'R', 15, &isMoving);
     }
     else if(midIR == low && leftIR == low && rightIR == low){
         printf("No trail\n");
-	    isTrail = FALSE;
+	    //isTrail = FALSE;
+	    Stop(Yes, allMotors, &isMoving);
     }
 }
 

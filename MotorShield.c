@@ -22,7 +22,7 @@
 //Method to initialize the motor struct
 //setting the pins that are used by each motor
 //******************************************
-void Init(struct Motors *motor, int enable, int forward, int reverse) {
+void Init(struct Motors * motor, int enable, int forward, int reverse) {
 	//*****************************************
 	//Set the variables of the motor struct
 	//The enable pin and 2 control pins
@@ -52,7 +52,7 @@ void Init(struct Motors *motor, int enable, int forward, int reverse) {
 }
 
 
-void Move(struct Motors motor [], char direction,  int speed, bool * moving) {
+void Move(struct Motors motor [], char direction,  int speed, _Bool * moving) {
     if(*moving != TRUE) {
         *moving = TRUE;
     }
@@ -145,7 +145,7 @@ void Right(struct Motors * motor1, struct Motors * motor2, struct Motors * motor
 }
 
 
-void SmoothRight(struct Motors motors [], int speed, bool * moving) {
+void SmoothRight(struct Motors motors [], int speed, _Bool * moving) {
     for(int i = 0; i < 4; ++i) {
         if(i == 0 || i == 2) {
             softPwmWrite(motors[i].enablePin, speed);
@@ -153,7 +153,7 @@ void SmoothRight(struct Motors motors [], int speed, bool * moving) {
     }
 }
 
-void SmoothLeft(struct Motors motors [], int speed, bool * moving) {
+void SmoothLeft(struct Motors motors [], int speed, _Bool * moving) {
     for(int i = 2; i < 4; ++i) {
         if(i == 1 || i == 3) {
             softPwmWrite(motors[i].enablePin, speed);
@@ -162,7 +162,7 @@ void SmoothLeft(struct Motors motors [], int speed, bool * moving) {
 }
 
 
-void Stop(bool Yes, struct Motors motors[], bool * moving) {
+void Stop(_Bool Yes, struct Motors motors[], _Bool * moving) {
 	if(Yes) {
 		for(int i = 0; i < 4; ++i) {
 			digitalWrite(motors[i].forwardPin, LOW);

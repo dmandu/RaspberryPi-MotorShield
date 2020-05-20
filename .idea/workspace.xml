@@ -10,10 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf653856-ace6-4d38-a9f9-b49fc621c4ec" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SpeedEncoder.c" beforeDir="false" afterPath="$PROJECT_DIR$/SpeedEncoder.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SpeedEncoder.h" beforeDir="false" afterPath="$PROJECT_DIR$/SpeedEncoder.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MotorShield.c" beforeDir="false" afterPath="$PROJECT_DIR$/MotorShield.c" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,8 +26,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="167" lean-forward="true" selection-start-line="167" selection-end-line="167" />
+            <state relative-caret-position="221">
+              <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
             </state>
           </provider>
         </entry>
@@ -56,8 +53,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MotorShield.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2176">
-              <caret line="128" selection-start-line="128" selection-end-line="128" />
+            <state relative-caret-position="136">
+              <caret line="56" column="22" lean-forward="true" selection-start-line="56" selection-start-column="22" selection-end-line="56" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -100,10 +97,10 @@
         <option value="$PROJECT_DIR$/DistanceSensor.c" />
         <option value="$PROJECT_DIR$/MotorShield.h" />
         <option value="$PROJECT_DIR$/DistanceSensor.h" />
-        <option value="$PROJECT_DIR$/MotorShield.c" />
         <option value="$PROJECT_DIR$/SpeedEncoder.c" />
         <option value="$PROJECT_DIR$/SpeedEncoder.h" />
         <option value="$PROJECT_DIR$/main.c" />
+        <option value="$PROJECT_DIR$/MotorShield.c" />
       </list>
     </option>
   </component>
@@ -180,12 +177,12 @@
       <workItem from="1589852523966" duration="347000" />
       <workItem from="1589852939621" duration="865000" />
       <workItem from="1589938270345" duration="10836000" />
-      <workItem from="1589996756777" duration="10597000" />
+      <workItem from="1589996756777" duration="10736000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62917000" />
+    <option name="totallyTimeSpent" value="63056000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -229,13 +226,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotorShield.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2176">
-          <caret line="128" selection-start-line="128" selection-end-line="128" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DistanceSensor.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
@@ -264,10 +254,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/MotorShield.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="56" column="22" lean-forward="true" selection-start-line="56" selection-start-column="22" selection-end-line="56" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="167" lean-forward="true" selection-start-line="167" selection-end-line="167" />
+        <state relative-caret-position="221">
+          <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
         </state>
       </provider>
     </entry>

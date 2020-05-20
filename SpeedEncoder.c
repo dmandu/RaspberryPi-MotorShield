@@ -18,14 +18,14 @@ void SpeedEncoderInit(int pinNum) {
 }
 
 void * SpeedEncoderRotations(void * args) {
-	struct MeasureDataArgs * argptr = (struct MeasureDataArgs *) args;
+	//struct MeasureDataArgs * argptr = (struct MeasureDataArgs *) args;
 	int pulses = 0;
 	int rotations = 0;
 	int dataHigh = 1;
 	int data;
-	int * speed =argptr->speedptr;
-	_Bool * moving = argptr->movingptr;
-	while(rotations != 5) {
+	//int * speed =argptr->speedptr;
+	//_Bool * moving = argptr->movingptr;
+	while(rotations != 4) {
 	    data = digitalRead(pin);
 	    if(data == dataHigh) {
             while (data != dataHigh) {

@@ -54,15 +54,15 @@ struct Motors motor2;
 struct Motors motor3;
 struct Motors motor4;
 
-struct MeasureDataArgs threadArgs;
+//struct MeasureDataArgs threadArgs;
 
 pthread_t speedEncoderThread;
 //pthread_t lsiThread;
 
 int main() {
 	wiringPiSetup();
-	threadArgs.speedptr = &speed;
-	threadArgs.movingptr = &isMoving;
+	//threadArgs.speedptr = &speed;
+	//threadArgs.movingptr = &isMoving;
 
  	//InitSPI();
 	InitMotors();
@@ -74,15 +74,17 @@ int main() {
     digitalWrite(motor4.enablePin, HIGH);
 
     struct Motors allMotors [4] = {motor1, motor2, motor3, motor4};
+    for(int i = 1; i <= 4; ++i) {
+        printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
+    }
     //int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
 	Move(allMotors, 'F', 23, &isMoving);
    	while(isTrail) {
-		CheckEchoSensor(allMotors);
-		//CheckIRSensors(allMotors);
-		Move(allMotors, 'F', 23, &isMoving);
+		CheckIRSensors(allMotors);
+        CheckEchoSensor(allMotors);
 	}
 	Stop(Yes, allMotors,&isMoving);
-   	printf("No trail to follow");
+   	printf("No trail to follow\n");
     return 1;
 }
 
@@ -113,6 +115,10 @@ void InitSensors() {
 
 
 void CheckEchoSensor(struct Motors allMotors []) {
+    printf("CHECKECHOSENSOR");
+    for(int i = 1; i <= 4; ++i) {
+        printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
+    }
     if(MeasureDistance() <= 10.0) {
 	    printf("POTENTIAL OBSTACLE\n");
 	    obstacle = TRUE;
@@ -127,12 +133,15 @@ void CheckEchoSensor(struct Motors allMotors []) {
 
 void maneuverObject(struct Motors allMotors []) {
     printf("Attempting to go around\n");
+    for(int i = 1; i <= 4; ++i) {
+        printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
+    }
     while(digitalRead(OBSTACLESENSOR) == 1) {
-        pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
+        pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
         Move(allMotors, 'R', 40, &isMoving);
         pthread_join(speedEncoderThread, NULL);
+        Stop(Yes, allMotors, &isMoving);
     }
-    Stop(Yes, allMotors, &isMoving);
     printf("Going forward\n");
     while(digitalRead(OBSTACLESENSOR) == 0) {
         Move(allMotors, 'F', 23, &isMoving);
@@ -140,11 +149,11 @@ void maneuverObject(struct Motors allMotors []) {
     Stop(Yes, allMotors, &isMoving);
     printf("Turning left\n");
     while(digitalRead(OBSTACLESENSOR) == 1) {
-        pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
+        pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
         Move(allMotors, 'L', 40, &isMoving);
         pthread_join(speedEncoderThread, NULL);
+        Stop(Yes, allMotors, &isMoving);
     }
-    Stop(Yes, allMotors, &isMoving);
     printf("Moving forward\n");
     while(digitalRead(OBSTACLESENSOR) == 0) {
         Move(allMotors, 'F', 23, &isMoving);
@@ -157,6 +166,9 @@ void CheckIRSensors(struct Motors allMotors []) {
     int high = 1;
     int low = 0;
     printf("Left: %d, Mid: %d, Right: %d\n", digitalRead(IRSENSORLEFT), digitalRead(IRSENSORMID), digitalRead(IRSENSORRIGHT));
+    for(int i = 1; i <= 4; ++i) {
+        printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
+    }
     if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
 	    printf("Moving foward\n");
 	    Move(allMotors, 'F', 23, &isMoving);

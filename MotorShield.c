@@ -48,8 +48,7 @@ void Init(struct Motors *motor, int enable, int forward, int reverse) {
     	digitalWrite(motor->enablePin, HIGH);
     	digitalWrite(motor->forwardPin, LOW);
     	digitalWrite(motor->reversePin, LOW);
-        softPwmCreate(motor->enablePin, 15, 100);
-        digitalWrite(motor->enablePin, HIGH);
+        softPwmCreate(motor->enablePin, 0, 100);
 
 }
 
@@ -58,6 +57,7 @@ void Move(struct Motors motor [], char direction,  int speed, bool * moving) {
     *moving = TRUE;
     for(int i = 0; i < 4; ++i) {
         softPwmWrite(motor[i].enablePin, speed);
+        printf("Motor %d EnablePin: %d\n", i, digitalRead(motor[i].enablePin));
     }
 
 	if(direction == 'F') {

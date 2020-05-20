@@ -126,9 +126,7 @@ void Reverse(struct Motors * motor, int speed) {
 }
 
 void Left(struct Motors * motor1, struct Motors * motor2, struct Motors * motor3, struct Motors * motor4, int speed) {
-    if(digitalRead(motor[i].enablePin) == 0) {
-        digitalWrite(motor[i].enablePin, HIGH);
-    }
+
 	Reverse(motor1, speed);
 	Reverse(motor3, speed);
 	Forward(motor2, speed);
@@ -136,9 +134,7 @@ void Left(struct Motors * motor1, struct Motors * motor2, struct Motors * motor3
 }
 
 void Right(struct Motors * motor1, struct Motors * motor2, struct Motors * motor3, struct Motors * motor4, int speed) {
-    if(digitalRead(motor[i].enablePin) == 0) {
-        digitalWrite(motor[i].enablePin, HIGH);
-    }
+
 	Reverse(motor2, speed);
 	Reverse(motor4, speed);
 	Forward(motor1, speed);

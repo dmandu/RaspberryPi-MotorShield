@@ -24,7 +24,7 @@ struct Motors {
     int reversePin;
 };
 
-void Move(struct Motors [], char, int, bool *);
+void Move(struct Motors * [], char, int, bool *);
 
 void Init(struct Motors *, int, int, int);
 
@@ -36,9 +36,9 @@ void Left(struct Motors *, struct Motors *, struct Motors *, struct Motors *, in
 
 void Right(struct Motors *, struct Motors *, struct Motors *, struct Motors *, int);
 
-void SmoothRight(struct Motors [], int, bool *);
+void SmoothRight(struct Motors * [], int, bool *);
 
-void SmoothLeft(struct Motors [], int, bool *);
+void SmoothLeft(struct Motors * [], int, bool *);
 
-void Stop(bool Yes, struct Motors [], bool *);
+void Stop(bool Yes, struct Motors * [], bool *);
 #endif //ASSIGNMENT3_MOTORSHIELD_H

@@ -75,7 +75,7 @@ int main() {
 
     struct Motors allMotors [4] = {motor1, motor2, motor3, motor4};
     //int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
-	Move(allMotors, 'F', 20, &isMoving);
+	Move(allMotors, 'F', 15, &isMoving);
    	while(isTrail) {
 		CheckEchoSensor(allMotors);
 		CheckIRSensors(allMotors);
@@ -112,12 +112,12 @@ void InitSensors() {
 
 
 void CheckEchoSensor(struct Motors allMotors []) {
-    if(MeasureDistance() <= 15.0) {
+    if(MeasureDistance() <= 10.0) {
 	    printf("POTENTIAL OBSTACLE\n");
 	    obstacle = TRUE;
         Stop(Yes, allMotors, &isMoving);
         sleep(2);
-        if(MeasureDistance() <= 15.0) {
+        if(MeasureDistance() <= 10.0) {
             printf("Obstacle still there\n");
             maneuverObject(allMotors);
         }
@@ -128,25 +128,25 @@ void maneuverObject(struct Motors allMotors []) {
     printf("Attempting to go around\n");
     while(digitalRead(OBSTACLESENSOR) == 1) {
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
-        Move(allMotors, 'R', 60, &isMoving);
+        Move(allMotors, 'R', 40, &isMoving);
         pthread_join(speedEncoderThread, NULL);
     }
     Stop(Yes, allMotors, &isMoving);
     printf("Going forward\n");
     while(digitalRead(OBSTACLESENSOR) == 0) {
-        Move(allMotors, 'F', 20, &isMoving);
+        Move(allMotors, 'F', 15, &isMoving);
     }
     Stop(Yes, allMotors, &isMoving);
     printf("Turning left\n");
     while(digitalRead(OBSTACLESENSOR) == 1) {
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
-        Move(allMotors, 'L', 60, &isMoving);
+        Move(allMotors, 'L', 40, &isMoving);
         pthread_join(speedEncoderThread, NULL);
     }
     Stop(Yes, allMotors, &isMoving);
     printf("Moving forward\n");
     while(digitalRead(OBSTACLESENSOR) == 0) {
-        Move(allMotors, 'F', 20, &isMoving);
+        Move(allMotors, 'F', 15, &isMoving);
     }
     Stop(Yes, allMotors, &isMoving);
 }

@@ -132,16 +132,19 @@ void maneuverObject(struct Motors allMotors []) {
         pthread_join(speedEncoderThread, NULL);
     }
     Stop(Yes, allMotors, &isMoving);
+    printf("Going forward\n");
     while(digitalRead(OBSTACLESENSOR) == 0) {
         Move(allMotors, 'F', 20, &isMoving);
     }
     Stop(Yes, allMotors, &isMoving);
+    printf("Turning left\n");
     while(digitalRead(OBSTACLESENSOR) == 1) {
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
         Move(allMotors, 'L', 80, &isMoving);
         pthread_join(speedEncoderThread, NULL);
     }
     Stop(Yes, allMotors, &isMoving);
+    printf("Moving forward\n")
     while(digitalRead(OBSTACLESENSOR) == 0) {
         Move(allMotors, 'F', 20, &isMoving);
     }

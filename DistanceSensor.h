@@ -10,4 +10,5 @@ double MeasureDistance();
 
 void avoidObstacle(int * action);
 
+void maneuverObstacle(int * action);
 #endif //DISTANCESENSOR_H

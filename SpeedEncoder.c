@@ -10,7 +10,7 @@
 
 int pin;
 
-void SpeedEncoderInit(int pinNum) {
+void InitSpeedEncoder(int pinNum) {
 	pin = pinNum;
 
 	wiringPiSetup();

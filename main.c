@@ -21,7 +21,7 @@
 #include "SpeedEncoder.h"
 #include "DistanceSensor.h"
 
-#define SPEEDENCODER1 30
+#define SPEEDENCODER1 29
 #define IRSENSORLEFT 23
 #define IRSENSORMID 24
 #define IRSENSORRIGHT 25
@@ -67,7 +67,7 @@ int main() {
  	//InitSPI();
 	InitMotors();
 	InitSensors();
-	SpeedEncoderInit(SPEEDENCODER1);
+	InitSpeedEncoder(SPEEDENCODER1);
 	digitalWrite(motor1.enablePin, HIGH);
 	digitalWrite(motor2.enablePin, HIGH);
     digitalWrite(motor3.enablePin, HIGH);
@@ -165,11 +165,16 @@ void maneuverObject(struct Motors allMotors []) {
 void CheckIRSensors(struct Motors allMotors []) {
     int high = 1;
     int low = 0;
-    printf("Left: %d, Mid: %d, Right: %d\n", digitalRead(IRSENSORLEFT), digitalRead(IRSENSORMID), digitalRead(IRSENSORRIGHT));
+
+    int leftIR = digitalRead(IRSENSORLEFT);
+    int midIR = digitalRead(IRSENSORMID);
+    int rightIR =  digitalRead(IRSENSORRIGHT);
+
+    printf("Left: %d, Mid: %d, Right: %d\n", leftIR, midIR, rightIR);
     for(int i = 1; i <= 4; ++i) {
         printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
     }
-    if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
+    if(leftIR == high && midIR == high && rightIR == high) {
 	    printf("Moving foward\n");
 	    Move(allMotors, 'F', 23, &isMoving);
     }/*
@@ -183,15 +188,15 @@ void CheckIRSensors(struct Motors allMotors []) {
 	    printf("SteeringLeft\n");
 	    SmoothLeft(allMotors, 70, &isMoving);
    }*/
-    else if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == low) {
+    else if(leftIR == high && midIR == high && rightIR == low) {
         //turn left
         Move(allMotors, 'L', 23, &isMoving);
     }
-    else if(digitalRead(IRSENSORRIGHT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORLEFT) == low) {
+    else if(leftIR == high && midIR == high && leftIR == low) {
         //turn left
         Move(allMotors, 'R', 23, &isMoving);
     }
-    else if(digitalRead(IRSENSORMID) == low && digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORRIGHT) == low){
+    else if(midIR == low && leftIR == low && rightIR == low){
         printf("No trail\n");
 	    isTrail = FALSE;
     }

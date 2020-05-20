@@ -9,7 +9,7 @@ struct MeasureDataArgs {
 	_Bool * movingptr;
 };
 
-void SpeedEncoderInit(int);
+void InitSpeedEncoder(int);
 
 void * SpeedEncoderRotations(void *);
 

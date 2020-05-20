@@ -26,8 +26,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="41" column="38" selection-start-line="41" selection-start-column="38" selection-end-line="41" selection-end-column="38" />
+            <state relative-caret-position="798">
+              <caret line="156" column="30" selection-start-line="156" selection-start-column="30" selection-end-line="156" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -176,21 +176,21 @@
       <workItem from="1588809152754" duration="3926000" />
       <workItem from="1589852523966" duration="347000" />
       <workItem from="1589852939621" duration="865000" />
-      <workItem from="1589938270345" duration="7840000" />
+      <workItem from="1589938270345" duration="8062000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49324000" />
+    <option name="totallyTimeSpent" value="49546000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.29127517" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.15704697" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="0" visible="true" weight="0.296034" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="0" visible="true" weight="0.12464589" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="2" weight="0.3286119" />
       <window_info anchor="bottom" id="Message" order="3" />
@@ -262,8 +262,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="41" column="38" selection-start-line="41" selection-start-column="38" selection-end-line="41" selection-end-column="38" />
+        <state relative-caret-position="798">
+          <caret line="156" column="30" selection-start-line="156" selection-start-column="30" selection-end-line="156" selection-end-column="30" />
         </state>
       </provider>
     </entry>

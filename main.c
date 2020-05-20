@@ -73,21 +73,12 @@ int main() {
     digitalWrite(motor4.enablePin, HIGH);
 
     struct Motors allMotors [4] = {motor1, motor2, motor3, motor4};
-    for(int i = 0; i < 4; ++i) {
-        printf("EnablePin: %d\nForwardPin: %d\nReversePin: %d\n", allMotors[i].enablePin, allMotors[i].forwardPin, allMotors[i].reversePin);
-        printf("%d\n%d\n%d\n", digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
-    }
-    printf("motor1: %d\n", digitalRead(motor1.enablePin));
-    printf("motor2: %d\n", digitalRead(motor2.enablePin));
-    printf("motor3: %d\n", digitalRead(motor3.enablePin));
-    printf("motor4: %d\n", digitalRead(motor4.enablePin));
-
     //int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
-	/*Move(allMotors, 'F', 15, &isMoving);
+	Move(allMotors, 'F', 15, &isMoving);
    	while(isTrail) {
 		CheckEchoSensor(allMotors);
 		CheckIRSensors(allMotors);
-	}*/
+	}
 	Stop(Yes, allMotors,&isMoving);
    	printf("No trail to follow");
     return 1;

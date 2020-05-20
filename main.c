@@ -169,6 +169,10 @@ void CheckIRSensors(struct Motors allMotors []) {
     int midIR = digitalRead(IRSENSORMID);
     int rightIR =  digitalRead(IRSENSORRIGHT);
 
+    for(int i = 0; i < 4; ++i) {
+        softPwmWrite(motor[i].enablePin, i*2);
+    }
+
     printf("Left: %d, Mid: %d, Right: %d\n", leftIR, midIR, rightIR);
     for(int i = 0; i < 4; ++i) {
         printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));

@@ -74,7 +74,7 @@ int main() {
 
     struct Motors allMotors [4] = {motor1, motor2, motor3, motor4};
     //int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
-	Move(allMotors, 'F', 15, &isMoving);
+	Move(allMotors, 'F', 10, &isMoving);
    	while(isTrail) {
 		CheckEchoSensor(allMotors);
 		CheckIRSensors(allMotors);
@@ -111,12 +111,12 @@ void InitSensors() {
 
 
 void CheckEchoSensor(struct Motors allMotors []) {
-    if(MeasureDistance() <= 10.0) {
+    if(MeasureDistance() <= 20.0) {
 	    printf("POTENTIAL OBSTACLE\n");
 	    obstacle = TRUE;
         Stop(Yes, allMotors, &isMoving);
         sleep(3);
-        if(MeasureDistance() <= 10.0) {
+        if(MeasureDistance() <= 20.0) {
             printf("Obstacle still there\n");
             while(digitalRead(OBSTACLESENSOR) == 1) {
                 pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
@@ -149,7 +149,7 @@ void CheckIRSensors(struct Motors allMotors []) {
     printf("Left: %d, Mid: %d, Right: %d\n", digitalRead(IRSENSORLEFT), digitalRead(IRSENSORMID), digitalRead(IRSENSORRIGHT));
     if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
 	    printf("Moving foward\n");
-	    Move(allMotors, 'F', 15, &isMoving);
+	    Move(allMotors, 'F', 10, &isMoving);
     }
     else if(digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
         //steer to the right

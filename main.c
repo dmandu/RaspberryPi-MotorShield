@@ -68,10 +68,10 @@ int main() {
 	InitMotors();
 	InitSensors();
 	SpeedEncoderInit(SPEEDENCODER1);
-	/*digitalWrite(motor1.enablePin, HIGH);
+	digitalWrite(motor1.enablePin, HIGH);
 	digitalWrite(motor2.enablePin, HIGH);
     digitalWrite(motor3.enablePin, HIGH);
-    digitalWrite(motor4.enablePin, HIGH);*/
+    digitalWrite(motor4.enablePin, HIGH);
 
     struct Motors allMotors [4] = {motor1, motor2, motor3, motor4};
     //int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);

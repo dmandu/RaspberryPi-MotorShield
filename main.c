@@ -129,7 +129,7 @@ void maneuverObject(struct Motors allMotors []) {
     printf("Attempting to go around\n");
     while(digitalRead(OBSTACLESENSOR) == 1) {
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
-        Move(allMotors, 'R', 80, &isMoving);
+        Move(allMotors, 'R', 60, &isMoving);
         pthread_join(speedEncoderThread, NULL);
     }
     Stop(Yes, allMotors, &isMoving);
@@ -141,7 +141,7 @@ void maneuverObject(struct Motors allMotors []) {
     printf("Turning left\n");
     while(digitalRead(OBSTACLESENSOR) == 1) {
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
-        Move(allMotors, 'L', 80, &isMoving);
+        Move(allMotors, 'L', 60, &isMoving);
         pthread_join(speedEncoderThread, NULL);
     }
     Stop(Yes, allMotors, &isMoving);
@@ -160,7 +160,7 @@ void CheckIRSensors(struct Motors allMotors []) {
     if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
 	    printf("Moving foward\n");
 	    Move(allMotors, 'F', 20, &isMoving);
-    }
+    }/*
     else if(digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
         //steer to the right
 	    printf("SteeringRight\n");
@@ -170,21 +170,15 @@ void CheckIRSensors(struct Motors allMotors []) {
         //steer to the left
 	    printf("SteeringLeft\n");
 	    SmoothLeft(allMotors, 70, &isMoving);
-   }
-    /*else if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == low) {
+   }*/
+    else if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == low) {
         //turn left
-	    printf("Turn Left 90\n");
-        pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
-        Move(allMotors, 'L', 10, &isMoving);
-        pthread_join(speedEncoderThread, NULL);
+        Move(allMotors, 'L', 20, &isMoving);
     }
     else if(digitalRead(IRSENSORRIGHT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORLEFT) == low) {
         //turn left
-	    printf("Turn right 90\n");
-        pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
-        Move(allMotors, 'R', 10, &isMoving);
-        pthread_join(speedEncoderThread, NULL);
-    }*/
+        Move(allMotors, 'R', 20, &isMoving);
+    }
     else if(digitalRead(IRSENSORMID) == low && digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORRIGHT) == low){
         printf("No trail\n");
 	    isTrail = FALSE;

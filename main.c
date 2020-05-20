@@ -68,7 +68,7 @@ int main() {
 	InitSensors();
 	SpeedEncoderInit(SPEEDENCODER1);
 
-	struct Motors allMotors [] = {&motor1, &motor2, &motor3, &motor4};
+	struct Motors allMotors [4] = {motor1, motor2, motor3, motor4};
     for(int i = 0; i < 4; ++i) {
         printf("EnablePin: %d\nForwardPin: %d\nReversePin: %d\n", allMotors[i].enablePin, allMotors[i].forwardPin, allMotors[i].reversePin);
         printf("%d\n%d\n%d\n", digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));

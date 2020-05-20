@@ -74,12 +74,12 @@ int main() {
 
     struct Motors allMotors [4] = {motor1, motor2, motor3, motor4};
     //int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
-	Move(allMotors, 'F', 15, &isMoving);
+	Move(&allMotors, 'F', 15, &isMoving);
    	while(isTrail) {
-		CheckEchoSensor(allMotors);
-		CheckIRSensors(allMotors);
+		CheckEchoSensor(&allMotors);
+		CheckIRSensors(&allMotors);
 	}
-	Stop(Yes, allMotors,&isMoving);
+	Stop(Yes, &allMotors,&isMoving);
    	printf("No trail to follow");
     return 1;
 }

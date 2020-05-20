@@ -80,7 +80,6 @@ int main() {
 		CheckEchoSensor(allMotors);
 		//CheckIRSensors(allMotors);
 		Move(allMotors, 'F', 23, &isMoving);
-		sleep(1);
 	}
 	Stop(Yes, allMotors,&isMoving);
    	printf("No trail to follow");

@@ -39,6 +39,7 @@ void InitMotors();
 void InitSensors();
 void CheckIRSensors(struct Motors []);
 void CheckEchoSensor(struct Motors []);
+void maneuverObject(struct Motors []);
 void * LSICounter(void *);
 
 _Bool Yes = TRUE;
@@ -124,7 +125,7 @@ void CheckEchoSensor(struct Motors allMotors []) {
     }
 }
 
-void maneuverObject(struct Motors motors []) {
+void maneuverObject(struct Motors allMotors []) {
     while(digitalRead(OBSTACLESENSOR) == 1) {
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
         Move(allMotors, 'R', 40, &isMoving);

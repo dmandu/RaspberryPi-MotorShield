@@ -10,7 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf653856-ace6-4d38-a9f9-b49fc621c4ec" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/MotorShield.c" beforeDir="false" afterPath="$PROJECT_DIR$/MotorShield.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,8 +26,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="49" column="14" lean-forward="true" selection-start-line="49" selection-start-column="14" selection-end-line="49" selection-end-column="14" />
+            <state relative-caret-position="153">
+              <caret line="80" column="6" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -100,8 +99,8 @@
         <option value="$PROJECT_DIR$/DistanceSensor.h" />
         <option value="$PROJECT_DIR$/SpeedEncoder.c" />
         <option value="$PROJECT_DIR$/SpeedEncoder.h" />
-        <option value="$PROJECT_DIR$/main.c" />
         <option value="$PROJECT_DIR$/MotorShield.c" />
+        <option value="$PROJECT_DIR$/main.c" />
       </list>
     </option>
   </component>
@@ -178,12 +177,12 @@
       <workItem from="1589852523966" duration="347000" />
       <workItem from="1589852939621" duration="865000" />
       <workItem from="1589938270345" duration="10836000" />
-      <workItem from="1589996756777" duration="13372000" />
+      <workItem from="1589996756777" duration="13496000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65692000" />
+    <option name="totallyTimeSpent" value="65816000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -264,8 +263,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="49" column="14" lean-forward="true" selection-start-line="49" selection-start-column="14" selection-end-line="49" selection-end-column="14" />
+        <state relative-caret-position="153">
+          <caret line="80" column="6" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
         </state>
       </provider>
     </entry>

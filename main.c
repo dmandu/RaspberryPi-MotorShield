@@ -78,7 +78,7 @@ int main() {
         printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
     }
     //int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
-	Move(allMotors, 'F', 23, &isMoving);
+	//Move(allMotors, 'F', 23, &isMoving);
    	while(isTrail) {
 		CheckIRSensors(allMotors);
         CheckEchoSensor(allMotors);

@@ -72,6 +72,7 @@ int main() {
     for(int i = 0; i < 4; ++i) {
         printf("EnablePin: %d\nForwardPin: %d\nReversePin: %d\n", allMotors[i].enablePin, allMotors[i].forwardPin, allMotors[i].reversePin);
         printf("%d\n%d\n%d\n", digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
+        printf("%d\n", motor1.enablePin);
     }
 	//int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
 	/*Move(allMotors, 'F', 15, &isMoving);

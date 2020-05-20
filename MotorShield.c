@@ -62,7 +62,7 @@ void Move(struct Motors motor [], char direction,  int speed, _Bool * moving) {
 
 	if(direction == 'F') {
 		for(int i = 0; i < 4; ++i) {
-            digitalWrite(motor[i].enablePin, HIGH);
+            //digitalWrite(motor[i].enablePin, HIGH);
 
             digitalWrite(motor[i].reversePin, LOW);
 			digitalWrite(motor[i].forwardPin, HIGH);
@@ -70,7 +70,7 @@ void Move(struct Motors motor [], char direction,  int speed, _Bool * moving) {
 	}
 	else if(direction == 'B') {
 		for(int i = 0; i < 4; ++i) {
-            digitalWrite(motor[i].enablePin, HIGH);
+            //digitalWrite(motor[i].enablePin, HIGH);
 
             digitalWrite(motor[i].forwardPin, LOW);
 			digitalWrite(motor[i].reversePin, HIGH);
@@ -78,7 +78,7 @@ void Move(struct Motors motor [], char direction,  int speed, _Bool * moving) {
 	}
 	else if(direction == 'R') {
 		for(int i = 0; i < 4; ++i) {
-		    digitalWrite(motor[i].enablePin, HIGH);
+		    //digitalWrite(motor[i].enablePin, HIGH);
 			if(i == 0 || i == 2) {
 				digitalWrite(motor[i].reversePin, LOW);
 				digitalWrite(motor[i].forwardPin, HIGH);

@@ -81,7 +81,8 @@ int main() {
 	//Move(allMotors, 'F', 23, &isMoving);
    	while(isTrail) {
 		CheckIRSensors(allMotors);
-        CheckEchoSensor(allMotors);
+        //CheckEchoSensor(allMotors);
+        sleep(3);
 	}
 	Stop(Yes, allMotors,&isMoving);
    	printf("No trail to follow\n");
@@ -173,7 +174,7 @@ void CheckIRSensors(struct Motors allMotors []) {
     printf("Left: %d, Mid: %d, Right: %d\n", leftIR, midIR, rightIR);
     for(int i = 1; i <= 4; ++i) {
         printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
-    }
+    }/*
     if(leftIR == high && midIR == high && rightIR == high) {
 	    printf("Moving foward\n");
 	    Move(allMotors, 'F', 15, &isMoving);
@@ -187,7 +188,7 @@ void CheckIRSensors(struct Motors allMotors []) {
         //steer to the left
 	    printf("SteeringLeft\n");
 	    SmoothLeft(allMotors, 70, &isMoving);
-   }*/
+   }
     else if(leftIR == high && midIR == high && rightIR == low) {
         //turn left
         Move(allMotors, 'L', 15, &isMoving);
@@ -200,7 +201,7 @@ void CheckIRSensors(struct Motors allMotors []) {
         printf("No trail\n");
 	    //isTrail = FALSE;
 	    Stop(Yes, allMotors, &isMoving);
-    }
+    }*/
 }
 
 

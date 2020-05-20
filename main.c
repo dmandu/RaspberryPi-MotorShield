@@ -78,7 +78,6 @@ int main() {
 	Move(allMotors, 'F', 20, &isMoving);
    	while(isTrail) {
 		CheckEchoSensor(allMotors);
-		sleep(1);
 		CheckIRSensors(allMotors);
 	}
 	Stop(Yes, allMotors,&isMoving);

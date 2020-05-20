@@ -142,8 +142,6 @@ void Right(struct Motors * motor1, struct Motors * motor2, struct Motors * motor
 
 
 void SmoothRight(struct Motors motors [], int speed, bool * moving) {
-    Move(motors,'F', 30, moving);
-
     for(int i = 0; i < 4; ++i) {
         if(i == 0 || i == 2) {
             softPwmWrite(motors[i].enablePin, speed);
@@ -152,8 +150,6 @@ void SmoothRight(struct Motors motors [], int speed, bool * moving) {
 }
 
 void SmoothLeft(struct Motors motors [], int speed, bool * moving) {
-    Move(motors,'F', 30, moving);
-
     for(int i = 2; i < 4; ++i) {
         if(i == 1 || i == 3) {
             softPwmWrite(motors[i].enablePin, speed);

@@ -179,7 +179,6 @@ void CheckIRSensors(struct Motors allMotors []) {
         printf("No trail\n");
 	    isTrail = FALSE;
     }
-    Move(allMotors, 'F', 15, &isMoving);
 }
 
 

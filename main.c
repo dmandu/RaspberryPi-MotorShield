@@ -172,7 +172,7 @@ void CheckIRSensors(struct Motors allMotors []) {
     int rightIR =  digitalRead(IRSENSORRIGHT);
 
     printf("Left: %d, Mid: %d, Right: %d\n", leftIR, midIR, rightIR);
-    for(int i = 1; i <= 4; ++i) {
+    for(int i = 0; i < 4; ++i) {
         printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
     }/*
     if(leftIR == high && midIR == high && rightIR == high) {

@@ -169,15 +169,7 @@ void CheckIRSensors(struct Motors allMotors []) {
     int midIR = digitalRead(IRSENSORMID);
     int rightIR =  digitalRead(IRSENSORRIGHT);
 
-    for(int i = 0; i < 4; ++i) {
-        softPwmWrite(allMotors[i].enablePin, i*2);
-        printf("%d\n", allMotors[i].enablePin);
-    }
-
     printf("Left: %d, Mid: %d, Right: %d\n", leftIR, midIR, rightIR);
-    for(int i = 0; i < 4; ++i) {
-        printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
-    }/*
     if(leftIR == high && midIR == high && rightIR == high) {
 	    printf("Moving foward\n");
 	    Move(allMotors, 'F', 15, &isMoving);
@@ -191,7 +183,7 @@ void CheckIRSensors(struct Motors allMotors []) {
         //steer to the left
 	    printf("SteeringLeft\n");
 	    SmoothLeft(allMotors, 70, &isMoving);
-   }
+   }*/
     else if(leftIR == high && midIR == high && rightIR == low) {
         //turn left
         Move(allMotors, 'L', 15, &isMoving);
@@ -204,7 +196,7 @@ void CheckIRSensors(struct Motors allMotors []) {
         printf("No trail\n");
 	    //isTrail = FALSE;
 	    Stop(Yes, allMotors, &isMoving);
-    }*/
+    }
 }
 
 

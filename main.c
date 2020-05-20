@@ -171,7 +171,7 @@ void CheckIRSensors(struct Motors allMotors []) {
 
     for(int i = 0; i < 4; ++i) {
         softPwmWrite(allMotors[i].enablePin, i*2);
-        printf(allMotors[i].enablePin);
+        printf("%d\n", allMotors[i].enablePin);
     }
 
     printf("Left: %d, Mid: %d, Right: %d\n", leftIR, midIR, rightIR);

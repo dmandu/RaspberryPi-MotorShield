@@ -69,13 +69,15 @@ int main() {
 	SpeedEncoderInit(SPEEDENCODER1);
 
 	struct Motors allMotors [] = {motor1, motor2, motor3, motor4};
-
+    for(int i = 0; i < 4; ++i) {
+        printf("EnablePin: %d", allMotors[i].enablePin);
+    }
 	//int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
-	Move(allMotors, 'F', 15, &isMoving);
+	/*Move(allMotors, 'F', 15, &isMoving);
    	while(isTrail) {
 		CheckEchoSensor(allMotors);
 		CheckIRSensors(allMotors);
-	}
+	}*/
 	Stop(Yes, allMotors,&isMoving);
    	printf("No trail to follow");
     return 1;
@@ -151,12 +153,12 @@ void CheckIRSensors(struct Motors allMotors []) {
     else if(digitalRead(IRSENSORLEFT) == low && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == high) {
         //steer to the right
 	    printf("SteeringRight\n");
-	    SmoothRight(allMotors, 50, &isMoving);
+	    SmoothRight(allMotors, 70, &isMoving);
     }
     else if(digitalRead(IRSENSORRIGHT) == low && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORLEFT) == high) {
         //steer to the left
 	    printf("SteeringLeft\n");
-	    SmoothLeft(allMotors, 50, &isMoving);
+	    SmoothLeft(allMotors, 70, &isMoving);
    }
     /*else if(digitalRead(IRSENSORLEFT) == high && digitalRead(IRSENSORMID) == high && digitalRead(IRSENSORRIGHT) == low) {
         //turn left

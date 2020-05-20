@@ -125,6 +125,7 @@ void CheckEchoSensor(struct Motors allMotors []) {
 }
 
 void maneuverObject(struct Motors allMotors []) {
+    printf("Attempting to go around");
     while(digitalRead(OBSTACLESENSOR) == 1) {
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
         Move(allMotors, 'R', 60, &isMoving);

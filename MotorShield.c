@@ -46,9 +46,9 @@ void Init(struct Motors *motor, int enable, int forward, int reverse) {
 	//2 control pins
 	//**************************************
     	digitalWrite(motor->enablePin, HIGH);
-    	digitalWrite(motor->forwardPin, HIGH);
+    	digitalWrite(motor->forwardPin, LOW);
     	digitalWrite(motor->reversePin, LOW);
-        softPwmCreate(motor->enablePin, 0, 100);
+        softPwmCreate(motor->enablePin, 15, 100);
 
 }
 

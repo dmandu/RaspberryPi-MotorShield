@@ -144,7 +144,7 @@ void maneuverObject(struct Motors allMotors []) {
         pthread_join(speedEncoderThread, NULL);
     }
     Stop(Yes, allMotors, &isMoving);
-    printf("Moving forward\n")
+    printf("Moving forward\n");
     while(digitalRead(OBSTACLESENSOR) == 0) {
         Move(allMotors, 'F', 20, &isMoving);
     }

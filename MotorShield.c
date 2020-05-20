@@ -53,11 +53,14 @@ void Init(struct Motors *motor, int enable, int forward, int reverse) {
 }
 
 
-void Move(struct Motors * motor [], char direction,  int speed, bool * moving) {
+void Move(struct Motors motor [], char direction,  int speed, bool * moving) {
     *moving = TRUE;
     for(int i = 0; i < 4; ++i) {
         softPwmWrite(motor[i].enablePin, speed);
         printf("Motor %d EnablePin: %d\n", i, digitalRead(motor[i].enablePin));
+        if(digitalRead(motor[i].enablePin) == 0) {
+            digitalWrite(motor[i].enablePin, HIGH);
+        }
     }
 
 	if(direction == 'F') {
@@ -138,7 +141,7 @@ void Right(struct Motors * motor1, struct Motors * motor2, struct Motors * motor
 }
 
 
-void SmoothRight(struct Motors * motors [], int speed, bool * moving) {
+void SmoothRight(struct Motors motors [], int speed, bool * moving) {
     Move(motors,'F', 30, moving);
 
     for(int i = 0; i < 4; ++i) {
@@ -148,7 +151,7 @@ void SmoothRight(struct Motors * motors [], int speed, bool * moving) {
     }
 }
 
-void SmoothLeft(struct Motors * motors [], int speed, bool * moving) {
+void SmoothLeft(struct Motors motors [], int speed, bool * moving) {
     Move(motors,'F', 30, moving);
 
     for(int i = 2; i < 4; ++i) {
@@ -159,7 +162,7 @@ void SmoothLeft(struct Motors * motors [], int speed, bool * moving) {
 }
 
 
-void Stop(bool Yes, struct Motors * motors[], bool * moving) {
+void Stop(bool Yes, struct Motors motors[], bool * moving) {
 	if(Yes) {
 		for(int i = 0; i < 4; ++i) {
 			digitalWrite(motors[i].forwardPin, LOW);

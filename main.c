@@ -110,7 +110,7 @@ void InitSensors() {
 }
 
 
-void CheckEchoSensor(struct Motors * allMotors []) {
+void CheckEchoSensor(struct Motors allMotors []) {
     if(MeasureDistance() <= 10.0) {
 	    printf("POTENTIAL OBSTACLE\n");
 	    obstacle = TRUE;
@@ -143,7 +143,7 @@ void CheckEchoSensor(struct Motors * allMotors []) {
 }
 
 
-void CheckIRSensors(struct Motors * allMotors []) {
+void CheckIRSensors(struct Motors allMotors []) {
     int high = 1;
     int low = 0;
     printf("Left: %d, Mid: %d, Right: %d\n", digitalRead(IRSENSORLEFT), digitalRead(IRSENSORMID), digitalRead(IRSENSORRIGHT));

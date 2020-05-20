@@ -45,7 +45,6 @@ void Init(struct Motors *motor, int enable, int forward, int reverse) {
 	//Turn on enable pin and turn off the
 	//2 control pins
 	//**************************************
-    	digitalWrite(motor->enablePin, HIGH);
     	digitalWrite(motor->forwardPin, LOW);
     	digitalWrite(motor->reversePin, LOW);
         softPwmCreate(motor->enablePin, 0, 100);
@@ -58,26 +57,28 @@ void Move(struct Motors motor [], char direction,  int speed, bool * moving) {
         *moving = TRUE;
     }
     for(int i = 0; i < 4; ++i) {
-        if(digitalRead(motor[i].enablePin) == 0) {
-            digitalWrite(motor[i].enablePin, HIGH);
-        }
         softPwmWrite(motor[i].enablePin, speed);
     }
 
 	if(direction == 'F') {
 		for(int i = 0; i < 4; ++i) {
-			digitalWrite(motor[i].reversePin, LOW);
+            digitalWrite(motor[i].enablePin, HIGH);
+
+            digitalWrite(motor[i].reversePin, LOW);
 			digitalWrite(motor[i].forwardPin, HIGH);
 		}
 	}
 	else if(direction == 'B') {
 		for(int i = 0; i < 4; ++i) {
-			digitalWrite(motor[i].forwardPin, LOW);
+            digitalWrite(motor[i].enablePin, HIGH);
+
+            digitalWrite(motor[i].forwardPin, LOW);
 			digitalWrite(motor[i].reversePin, HIGH);
 		}
 	}
 	else if(direction == 'R') {
 		for(int i = 0; i < 4; ++i) {
+		    digitalWrite(motor[i].enablePin, HIGH);
 			if(i == 0 || i == 2) {
 				digitalWrite(motor[i].reversePin, LOW);
 				digitalWrite(motor[i].forwardPin, HIGH);

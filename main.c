@@ -68,15 +68,13 @@ int main() {
 	InitMotors();
 	InitSensors();
 	InitSpeedEncoder(SPEEDENCODER1);
+	/*
 	digitalWrite(motor1.enablePin, HIGH);
 	digitalWrite(motor2.enablePin, HIGH);
     digitalWrite(motor3.enablePin, HIGH);
     digitalWrite(motor4.enablePin, HIGH);
-
+    */
     struct Motors allMotors [4] = {motor1, motor2, motor3, motor4};
-    for(int i = 0; i < 4; ++i) {
-        printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
-    }
     //int ret1 = pthread_create(&lsiThread, NULL, &LSICounter, NULL);
 	//Move(allMotors, 'F', 23, &isMoving);
    	while(isTrail) {

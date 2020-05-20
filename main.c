@@ -112,12 +112,12 @@ void InitSensors() {
 
 
 void CheckEchoSensor(struct Motors allMotors []) {
-    if(MeasureDistance() <= 30.0) {
+    if(MeasureDistance() <= 15.0) {
 	    printf("POTENTIAL OBSTACLE\n");
 	    obstacle = TRUE;
         Stop(Yes, allMotors, &isMoving);
-        sleep(3);
-        if(MeasureDistance() <= 30.0) {
+        sleep(2);
+        if(MeasureDistance() <= 15.0) {
             printf("Obstacle still there\n");
             maneuverObject(allMotors);
         }
@@ -125,10 +125,10 @@ void CheckEchoSensor(struct Motors allMotors []) {
 }
 
 void maneuverObject(struct Motors allMotors []) {
-    printf("Attempting to go around");
+    printf("Attempting to go around\n");
     while(digitalRead(OBSTACLESENSOR) == 1) {
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
-        Move(allMotors, 'R', 60, &isMoving);
+        Move(allMotors, 'R', 80, &isMoving);
         pthread_join(speedEncoderThread, NULL);
     }
     Stop(Yes, allMotors, &isMoving);
@@ -138,7 +138,7 @@ void maneuverObject(struct Motors allMotors []) {
     Stop(Yes, allMotors, &isMoving);
     while(digitalRead(OBSTACLESENSOR) == 1) {
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, &threadArgs);
-        Move(allMotors, 'L', 60, &isMoving);
+        Move(allMotors, 'L', 80, &isMoving);
         pthread_join(speedEncoderThread, NULL);
     }
     Stop(Yes, allMotors, &isMoving);

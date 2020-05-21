@@ -79,7 +79,7 @@ int main() {
 	//Move(allMotors, 'F', 23, &isMoving);
    	while(isTrail) {
 		CheckIRSensors(allMotors);
-        //CheckEchoSensor(allMotors);
+        CheckEchoSensor(allMotors);
         sleep(3);
 	}
 	Stop(Yes, allMotors,&isMoving);
@@ -114,10 +114,6 @@ void InitSensors() {
 
 
 void CheckEchoSensor(struct Motors allMotors []) {
-    printf("CHECKECHOSENSOR");
-    for(int i = 1; i <= 4; ++i) {
-        printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
-    }
     if(MeasureDistance() <= 10.0) {
 	    printf("POTENTIAL OBSTACLE\n");
 	    obstacle = TRUE;
@@ -132,9 +128,6 @@ void CheckEchoSensor(struct Motors allMotors []) {
 
 void maneuverObject(struct Motors allMotors []) {
     printf("Attempting to go around\n");
-    for(int i = 1; i <= 4; ++i) {
-        printf("Motor %d: E: %d, F: %d, R: %d\n", i, digitalRead(allMotors[i].enablePin), digitalRead(allMotors[i].forwardPin), digitalRead(allMotors[i].reversePin));
-    }
     while(digitalRead(OBSTACLESENSOR) == 1) {
         pthread_create(&speedEncoderThread, NULL, &SpeedEncoderRotations, NULL);
         Move(allMotors, 'R', 40, &isMoving);

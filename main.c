@@ -113,12 +113,12 @@ void InitSensors() {
 
 
 void CheckEchoSensor(struct Motors allMotors []) {
-    if(MeasureDistance() <= 10.0) {
+    if(MeasureDistance() <= 5.0) {
 	    printf("POTENTIAL OBSTACLE\n");
 	    obstacle = TRUE;
         Stop(Yes, allMotors, &isMoving);
         sleep(2);
-        if(MeasureDistance() <= 10.0) {
+        if(MeasureDistance() <= 5.0) {
             printf("Obstacle still there\n");
             maneuverObject(allMotors);
         }
